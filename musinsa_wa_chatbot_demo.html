@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>무신사 × WhatsApp — Chatbot Demo</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --black: #0A0A0A;
+  --orange: #FF5200;
+  --wa-green: #25D366;
+  --wa-dark: #075E54;
+  --wa-teal: #128C7E;
+  --wa-bg: #ECE5DD;
+  --wa-bubble-bot: #FFFFFF;
+  --wa-bubble-user: #DCF8C6;
+  --gray: #888;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Inter','Noto Sans KR',sans-serif;
+  background: #111;
+  color: white;
+  min-height: 100vh;
+}
+
+/* ── PAGE HEADER ── */
+.page-header {
+  text-align: center;
+  padding: 60px 40px 40px;
+  background: linear-gradient(180deg, #1a1a1a 0%, #111 100%);
+}
+.page-header .logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.logo-mu {
+  background: white;
+  color: black;
+  font-weight: 900;
+  font-size: 18px;
+  padding: 6px 16px;
+  border-radius: 6px;
+}
+.logo-wa-badge {
+  background: var(--wa-green);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.page-title {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.page-title span { color: var(--orange); }
+.page-sub { color: rgba(255,255,255,.5); font-size: 14px; }
+
+/* ── SCENARIO SECTION ── */
+.scenario-section {
+  padding: 60px 60px;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.scenario-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+.scenario-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+.scenario-desc {
+  color: rgba(255,255,255,.5);
+  font-size: 13px;
+  margin-bottom: 50px;
+  line-height: 1.6;
+}
+
+/* ── LAYOUT: phone + description ── */
+.demo-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 60px;
+  align-items: start;
+}
+.demo-layout.reverse {
+  grid-template-columns: 1fr 320px;
+}
+.demo-layout.reverse .phone-wrap { order: 2; }
+.demo-layout.reverse .desc-wrap { order: 1; }
+
+/* ── PHONE MOCKUP ── */
+.phone-wrap {
+  display: flex;
+  justify-content: center;
+}
+.phone {
+  width: 290px;
+  background: #1C1C1E;
+  border-radius: 44px;
+  padding: 14px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.1);
+  position: relative;
+}
+.phone::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 28px;
+  background: #1C1C1E;
+  border-radius: 0 0 20px 20px;
+  z-index: 10;
+}
+.phone-screen {
+  background: var(--wa-bg);
+  border-radius: 32px;
+  overflow: hidden;
+  height: 580px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ── WA HEADER ── */
+.wa-header {
+  background: var(--wa-teal);
+  padding: 42px 14px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.wa-back { color: white; font-size: 18px; opacity: .9; }
+.wa-avatar {
+  width: 36px; height: 36px;
+  background: var(--wa-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.wa-info { flex: 1; }
+.wa-name { font-size: 13px; font-weight: 700; color: white; }
+.wa-status { font-size: 10px; color: rgba(255,255,255,.7); }
+.wa-icons { color: rgba(255,255,255,.8); font-size: 16px; }
+
+/* ── WA BODY ── */
+.wa-body {
+  flex: 1;
+  overflow: hidden;
+  padding: 10px 10px;
+  position: relative;
+}
+.wa-body-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 100%;
+}
+
+/* ── WA DATE DIVIDER ── */
+.wa-date {
+  text-align: center;
+  font-size: 10px;
+  color: #666;
+  background: rgba(255,255,255,.7);
+  padding: 3px 10px;
+  border-radius: 8px;
+  align-self: center;
+  margin: 4px 0;
+}
+
+/* ── BUBBLES ── */
+.bubble {
+  max-width: 82%;
+  padding: 7px 10px;
+  border-radius: 10px;
+  font-size: 11px;
+  line-height: 1.5;
+  position: relative;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: bubbleIn .35s ease forwards;
+}
+.bubble.bot {
+  background: var(--wa-bubble-bot);
+  border-radius: 2px 10px 10px 10px;
+  align-self: flex-start;
+  color: #222;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+.bubble.user {
+  background: var(--wa-bubble-user);
+  border-radius: 10px 2px 10px 10px;
+  align-self: flex-end;
+  color: #222;
+}
+.bubble-time {
+  font-size: 9px;
+  color: #999;
+  text-align: right;
+  margin-top: 3px;
+}
+.bubble.user .bubble-time { color: #7BB661; }
+.bubble strong { font-weight: 700; }
+.bubble .emoji-big { font-size: 18px; display: block; margin-bottom: 3px; }
+
+@keyframes bubbleIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── TYPING INDICATOR ── */
+.typing {
+  background: white;
+  border-radius: 2px 10px 10px 10px;
+  padding: 10px 14px;
+  align-self: flex-start;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  opacity: 0;
+}
+.typing.show { opacity: 1; }
+.typing-dot {
+  width: 6px; height: 6px;
+  background: #bbb;
+  border-radius: 50%;
+  animation: typingBounce 1.2s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: .2s; }
+.typing-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes typingBounce {
+  0%,60%,100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
+
+/* ── QUICK REPLIES ── */
+.quick-replies {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 4px;
+  opacity: 0;
+  animation: bubbleIn .3s ease forwards;
+}
+.qr-btn {
+  background: white;
+  border: 1.5px solid var(--wa-teal);
+  color: var(--wa-teal);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+.qr-btn.selected {
+  background: var(--wa-teal);
+  color: white;
+}
+
+/* ── WA INPUT ── */
+.wa-input {
+  background: #F0F0F0;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.wa-input-box {
+  flex: 1;
+  background: white;
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 11px;
+  color: #999;
+}
+.wa-send {
+  width: 34px; height: 34px;
+  background: var(--wa-teal);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/* ── COUPON CARD ── */
+.wa-coupon {
+  background: linear-gradient(135deg, #FF5200, #FF6B35);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 4px 0;
+  color: white;
+}
+.wa-coupon-title { font-size: 9px; font-weight: 700; opacity: .8; letter-spacing: 1px; margin-bottom: 4px; }
+.wa-coupon-code { font-size: 15px; font-weight: 900; letter-spacing: 1px; margin-bottom: 3px; }
+.wa-coupon-sub { font-size: 9px; opacity: .8; }
+.wa-coupon-pct { font-size: 28px; font-weight: 900; text-align: right; line-height: 1; }
+
+/* ── PRODUCT CARD ── */
+.wa-product {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 3px 0;
+}
+.wa-product-img {
+  height: 80px;
+  background: linear-gradient(135deg, #1a1a1a, #333);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+.wa-product-info { padding: 8px 10px; }
+.wa-product-name { font-size: 11px; font-weight: 700; color: #222; }
+.wa-product-sub { font-size: 9px; color: #888; margin-top: 2px; }
+.wa-product-badge {
+  display: inline-block;
+  background: #FF3B30;
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-top: 3px;
+}
+
+/* ── DESC SIDE ── */
+.desc-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.desc-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 20px;
+  background: rgba(255,255,255,.04);
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.06);
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all .5s ease;
+}
+.desc-step.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.desc-step-num {
+  width: 32px; height: 32px;
+  background: var(--orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.desc-step-content { flex: 1; }
+.desc-step-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.desc-step-body {
+  font-size: 12px;
+  color: rgba(255,255,255,.55);
+  line-height: 1.6;
+}
+.desc-kpi {
+  display: inline-block;
+  background: rgba(255,82,0,.15);
+  color: var(--orange);
+  border: 1px solid rgba(255,82,0,.3);
+  border-radius: 20px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+.desc-kpi.green {
+  background: rgba(37,211,102,.12);
+  color: var(--wa-green);
+  border-color: rgba(37,211,102,.3);
+}
+
+/* ── REPLAY BTN ── */
+.replay-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 24px;
+  padding: 10px 24px;
+  color: rgba(255,255,255,.6);
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all .2s;
+}
+.replay-btn:hover {
+  background: rgba(255,255,255,.1);
+  color: white;
+}
+
+/* ── DIVIDER ── */
+.phase-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 60px;
+  margin: 10px 0;
+}
+.phase-divider-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,.07);
+}
+.phase-divider-label {
+  font-size: 11px;
+  color: rgba(255,255,255,.2);
+  white-space: nowrap;
+}
+
+/* ── FOOTER ── */
+.page-footer {
+  text-align: center;
+  padding: 40px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  color: rgba(255,255,255,.25);
+  font-size: 12px;
+}
+.page-footer strong { color: rgba(255,255,255,.5); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="logo-row">
+    <div class="logo-mu">MUSINSA</div>
+    <span style="color:rgba(255,255,255,.3);font-size:20px">×</span>
+    <div class="logo-wa-badge">💬</div>
+    <span style="color:rgba(255,255,255,.3);font-size:20px">WhatsApp</span>
+  </div>
+  <div class="page-title">챗봇 <span>Use Case</span> 데모</div>
+  <div class="page-sub" style="margin-top:8px;">방한 외국인 여정의 3단계 — 실제 WhatsApp 대화 흐름으로 보는 전략</div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     SCENARIO 1: PRE-ARRIVAL
+════════════════════════════════════ -->
+<div class="scenario-section">
+  <div class="scenario-label">Phase 1 · Pre-Arrival</div>
+  <div class="scenario-title">한국 오기 전 — 방문 정보 수집 & 쿠폰 선발급</div>
+  <div class="scenario-desc">FB/Instagram/TikTok 광고 클릭 → WhatsApp 자동 연결 → 챗봇이 방문 일정·숙박 지역·스타일을 수집하고 무신사 회원가입 후 즉시 쿠폰을 발송합니다.</div>
+
+  <div class="demo-layout">
+    <!-- PHONE -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="wa-header">
+            <span class="wa-back">‹</span>
+            <div class="wa-avatar">👗</div>
+            <div class="wa-info">
+              <div class="wa-name">MUSINSA Official</div>
+              <div class="wa-status">● online</div>
+            </div>
+            <div class="wa-icons">⋮</div>
+          </div>
+          <div class="wa-body">
+            <div class="wa-body-inner" id="chat1">
+              <div class="wa-date">Today</div>
+            </div>
+          </div>
+          <div class="wa-input">
+            <div class="wa-input-box">Message</div>
+            <span style="font-size:18px;color:#999">😊</span>
+            <div class="wa-send">➤</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESC -->
+    <div class="desc-wrap" id="desc1">
+      <div class="desc-step" id="d1s1">
+        <div class="desc-step-num">1</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">광고 → WhatsApp 즉시 연결</div>
+          <div class="desc-step-body">FB/Instagram/TikTok 광고에서 "Get Seoul K-Fashion Guide" 클릭 시 WhatsApp이 자동으로 열리고 챗봇 웰컴 메시지가 즉시 발송됩니다. 앱 설치 불필요.</div>
+          <span class="desc-kpi">오픈율 98%</span>
+        </div>
+      </div>
+      <div class="desc-step" id="d1s2">
+        <div class="desc-step-num">2</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">방문 일정 수집 → 트리거 기준 설정</div>
+          <div class="desc-step-body">입력된 방문 날짜는 Phase 2 도착 트리거의 기준이 됩니다. 별도 액션 없이 방문일 당일 오전 10시에 자동 메시지가 발송됩니다.</div>
+          <span class="desc-kpi">챗봇 완료율 60~75%</span>
+        </div>
+      </div>
+      <div class="desc-step" id="d1s3">
+        <div class="desc-step-num">3</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">숙박 지역 → 맞춤 매장 안내</div>
+          <div class="desc-step-body">홍대·성수 선택 시 무신사 스탠다드 직영점 정보 자동 강조. 출발 3일 전 숙소에서 가장 가까운 매장 정보와 영업시간이 자동 발송됩니다.</div>
+          <span class="desc-kpi">매장 방문 의향 +40%</span>
+        </div>
+      </div>
+      <div class="desc-step" id="d1s4">
+        <div class="desc-step-num">4</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">회원가입 → 15% 쿠폰 즉시 발송</div>
+          <div class="desc-step-body">챗봇에서 바로 무신사 회원가입 링크를 제공하고, 가입 완료 즉시 방문 기간에 사용 가능한 15% 할인 쿠폰을 WhatsApp으로 자동 발송합니다.</div>
+          <span class="desc-kpi green">쿠폰 사용률 40~60%</span>
+        </div>
+      </div>
+      <button class="replay-btn" onclick="startChat1()">↺ &nbsp;다시 보기</button>
+    </div>
+  </div>
+</div>
+
+<div class="phase-divider">
+  <div class="phase-divider-line"></div>
+  <div class="phase-divider-label">PHASE 1 → PHASE 2</div>
+  <div class="phase-divider-line"></div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     SCENARIO 2: ON-GROUND
+════════════════════════════════════ -->
+<div class="scenario-section">
+  <div class="scenario-label">Phase 2 · On-Ground</div>
+  <div class="scenario-title">한국 도착 — 트리거 발송 & 핫 아이템 안내</div>
+  <div class="scenario-desc">사전 수집한 방문 일정을 기준으로 도착 당일 오전 10시에 자동 트리거가 발송됩니다. 도착 확인 후 오늘의 핫 아이템과 쿠폰 활성화 안내가 이어집니다.</div>
+
+  <div class="demo-layout reverse">
+    <!-- PHONE -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="wa-header">
+            <span class="wa-back">‹</span>
+            <div class="wa-avatar">👗</div>
+            <div class="wa-info">
+              <div class="wa-name">MUSINSA Official</div>
+              <div class="wa-status">● online</div>
+            </div>
+            <div class="wa-icons">⋮</div>
+          </div>
+          <div class="wa-body">
+            <div class="wa-body-inner" id="chat2">
+              <div class="wa-date">July 10 · Arrival Day</div>
+            </div>
+          </div>
+          <div class="wa-input">
+            <div class="wa-input-box">Message</div>
+            <span style="font-size:18px;color:#999">😊</span>
+            <div class="wa-send">➤</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESC -->
+    <div class="desc-wrap" id="desc2">
+      <div class="desc-step" id="d2s1">
+        <div class="desc-step-num">1</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">방문일 기준 자동 트리거 발송</div>
+          <div class="desc-step-body">Phase 1에서 수집한 방문 날짜 당일 오전 10시, 별도 설정 없이 도착 확인 메시지가 자동 발송됩니다. 미도착 시 "오늘 오후 도착" 옵션으로 재발송.</div>
+          <span class="desc-kpi">트리거 반응율 55~70%</span>
+        </div>
+      </div>
+      <div class="desc-step" id="d2s2">
+        <div class="desc-step-num">2</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">도착 확인 → 핫 아이템 즉시 발송</div>
+          <div class="desc-step-body">"도착했어요!" 응답 즉시 오늘의 핫 아이템 TOP 3와 매장 지도 링크가 자동 발송됩니다. 홍대 지역 선택자에게는 무신사 스탠다드 홍대점 정보가 우선 노출.</div>
+          <span class="desc-kpi">매장 방문 전환율 25~40%</span>
+        </div>
+      </div>
+      <div class="desc-step" id="d2s3">
+        <div class="desc-step-num">3</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">사전 발급 쿠폰 활성화 안내</div>
+          <div class="desc-step-body">Phase 1에서 발급받은 15% 쿠폰이 도착일부터 활성화됩니다. 계산대에서 이 WhatsApp 화면을 보여주면 즉시 적용되는 방식으로 마찰을 최소화합니다.</div>
+          <span class="desc-kpi green">쿠폰 사용률 40~60%</span>
+        </div>
+      </div>
+      <div class="desc-step" id="d2s4">
+        <div class="desc-step-num">4</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">체류 기간 일별 Flash Deal 발송</div>
+          <div class="desc-step-body">방문 기간 동안 매일 오전 현지 시간 기준으로 오늘의 Flash Deal과 신상 입고 알림이 자동 발송됩니다. 마지막 날에는 쿠폰 만료 D-day 알림.</div>
+          <span class="desc-kpi">일별 메시지 클릭률 45~55%</span>
+        </div>
+      </div>
+      <button class="replay-btn" onclick="startChat2()">↺ &nbsp;다시 보기</button>
+    </div>
+  </div>
+</div>
+
+<div class="phase-divider">
+  <div class="phase-divider-line"></div>
+  <div class="phase-divider-label">PHASE 2 → PHASE 3</div>
+  <div class="phase-divider-line"></div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     SCENARIO 3: POST-VISIT
+════════════════════════════════════ -->
+<div class="scenario-section">
+  <div class="scenario-label">Phase 3 · Post-Visit</div>
+  <div class="scenario-title">귀국 후 — 재방한 서베이 & 바이럴 루프</div>
+  <div class="scenario-desc">방문 일정 종료일 +1일부터 귀국 시퀀스가 자동 시작됩니다. 서베이 응답 기반으로 재방한 유도 쿠폰이 발송되고, 지인 추천으로 바이럴 루프가 완성됩니다.</div>
+
+  <div class="demo-layout">
+    <!-- PHONE -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="wa-header">
+            <span class="wa-back">‹</span>
+            <div class="wa-avatar">👗</div>
+            <div class="wa-info">
+              <div class="wa-name">MUSINSA Official</div>
+              <div class="wa-status">● online</div>
+            </div>
+            <div class="wa-icons">⋮</div>
+          </div>
+          <div class="wa-body">
+            <div class="wa-body-inner" id="chat3">
+              <div class="wa-date">July 14 · Day after return</div>
+            </div>
+          </div>
+          <div class="wa-input">
+            <div class="wa-input-box">Message</div>
+            <span style="font-size:18px;color:#999">😊</span>
+            <div class="wa-send">➤</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESC -->
+    <div class="desc-wrap" id="desc3">
+      <div class="desc-step" id="d3s1">
+        <div class="desc-step-num">1</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">귀국 +1일 자동 시퀀스 시작</div>
+          <div class="desc-step-body">방문 일정 종료일 다음날 자동으로 귀국 확인 메시지가 발송됩니다. 별점 수집으로 경험을 측정하고, 미구매 상품에 대한 온라인 배송 제안으로 이어집니다.</div>
+          <span class="desc-kpi">귀국 후 응답률 40~55%</span>
+        </div>
+      </div>
+      <div class="desc-step" id="d3s2">
+        <div class="desc-step-num">2</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">재방한 계획 서베이 (D+14)</div>
+          <div class="desc-step-body">2주 후 3문항 서베이 자동 발송. "3개월 내" 응답자에게는 VIP 재방한 쿠폰이 즉시 발급되고, "미정" 응답자에게는 월 1회 K-패션 트렌드 뉴스레터가 발송됩니다.</div>
+          <span class="desc-kpi">서베이 응답률 30~45%</span>
+        </div>
+      </div>
+      <div class="desc-step" id="d3s3">
+        <div class="desc-step-num">3</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">VIP 재방한 쿠폰 즉시 발급</div>
+          <div class="desc-step-body">"3개월 내 재방한" 응답 즉시 20% VIP 쿠폰이 발송됩니다. 다음 방문 예약을 유도하는 얼리버드 혜택으로 재방한 의향을 구체적인 계획으로 전환합니다.</div>
+          <span class="desc-kpi green">재방한 예약 의향 25~35%</span>
+        </div>
+      </div>
+      <div class="desc-step" id="d3s4">
+        <div class="desc-step-num">4</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">지인 추천 → 바이럴 루프 완성</div>
+          <div class="desc-step-body">WhatsApp 특성상 공유가 자연스럽습니다. 친구에게 구독 링크를 공유하면 친구는 15% 쿠폰, 나는 포인트를 받는 구조로 신규 구독자를 기하급수적으로 확대합니다.</div>
+          <span class="desc-kpi">지인 추천 전환율 8~15%</span>
+        </div>
+      </div>
+      <button class="replay-btn" onclick="startChat3()">↺ &nbsp;다시 보기</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════
+     BONUS: STORE QR SCENARIO
+════════════════════════════════════ -->
+<div class="scenario-section" style="background:rgba(255,255,255,.02);">
+  <div class="scenario-label">Phase 2 · On-Ground · Bonus</div>
+  <div class="scenario-title">현장 QR — 미구독 외국인 즉시 유입</div>
+  <div class="scenario-desc">무신사 스탠다드 매장, 쇼핑백, 팝업 현장의 QR을 스캔하면 WhatsApp이 열리고 즉시 가입 + 10% 당일 쿠폰이 발급됩니다.</div>
+
+  <div class="demo-layout reverse">
+    <!-- PHONE -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="wa-header">
+            <span class="wa-back">‹</span>
+            <div class="wa-avatar">🏪</div>
+            <div class="wa-info">
+              <div class="wa-name">MUSINSA STANDARD</div>
+              <div class="wa-status">Hongdae Store · ● open</div>
+            </div>
+            <div class="wa-icons">⋮</div>
+          </div>
+          <div class="wa-body">
+            <div class="wa-body-inner" id="chat4">
+              <div class="wa-date">Now · In-Store</div>
+            </div>
+          </div>
+          <div class="wa-input">
+            <div class="wa-input-box">Message</div>
+            <span style="font-size:18px;color:#999">😊</span>
+            <div class="wa-send">➤</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESC -->
+    <div class="desc-wrap" id="desc4">
+      <div class="desc-step" id="d4s1">
+        <div class="desc-step-num">QR</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">QR 스캔 → WhatsApp 즉시 오픈</div>
+          <div class="desc-step-body">매장 입구·계산대·피팅룸 앞·쇼핑백 내부의 QR을 스캔하면 WhatsApp이 자동으로 열립니다. NFC 없이 카메라 QR 스캔만으로 연결됩니다.</div>
+          <span class="desc-kpi">현장 QR 가입률 8~15%</span>
+        </div>
+      </div>
+      <div class="desc-step" id="d4s2">
+        <div class="desc-step-num">→</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">1분 내 회원가입 + 10% 즉시 발급</div>
+          <div class="desc-step-body">이름 입력 → 회원가입 링크 → 가입 완료 즉시 오늘만 유효한 10% 쿠폰이 WhatsApp으로 자동 발송됩니다. 계산대에서 이 화면을 보여주면 바로 적용.</div>
+          <span class="desc-kpi green">구매 전환율 20~35%</span>
+        </div>
+      </div>
+      <div class="desc-step" id="d4s3">
+        <div class="desc-step-num">✓</div>
+        <div class="desc-step-content">
+          <div class="desc-step-title">신규 구독자로 영구 등록</div>
+          <div class="desc-step-body">현장 QR로 가입한 고객도 Phase 3 귀국 후 시퀀스에 자동으로 편입됩니다. 한 번의 QR 스캔이 귀국 후 재방한까지 이어지는 고객 여정의 시작점이 됩니다.</div>
+          <span class="desc-kpi">LTV 3배 향상 가능</span>
+        </div>
+      </div>
+      <button class="replay-btn" onclick="startChat4()">↺ &nbsp;다시 보기</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <strong>Infobip Korea — APAC KJ Squad</strong><br>
+  WhatsApp Business API · Chatbot Automation · Campaign Management · 2026
+</div>
+
+
+<script>
+// ═══════════════════════════════════════
+// CHAT ENGINE
+// ═══════════════════════════════════════
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function addBubble(container, text, isUser, extraClass='') {
+  const div = document.createElement('div');
+  div.className = `bubble ${isUser ? 'user' : 'bot'} ${extraClass}`;
+  div.innerHTML = text + `<div class="bubble-time">${isUser ? '✓✓ ' : ''}${new Date().getHours()}:${String(new Date().getMinutes()).padStart(2,'0')}</div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+function addTyping(container) {
+  const div = document.createElement('div');
+  div.className = 'typing show';
+  div.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+function addQuickReplies(container, choices, selectedIdx) {
+  const wrap = document.createElement('div');
+  wrap.className = 'quick-replies';
+  choices.forEach((c, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'qr-btn' + (i === selectedIdx ? ' selected' : '');
+    btn.textContent = c;
+    wrap.appendChild(btn);
+  });
+  container.appendChild(wrap);
+  container.scrollTop = container.scrollHeight;
+  return wrap;
+}
+
+async function typeMsg(container, text, isUser, typingDelay=1200, extraClass='') {
+  if (!isUser) {
+    const t = addTyping(container);
+    await delay(typingDelay);
+    t.remove();
+  }
+  const b = addBubble(container, text, isUser, extraClass);
+  b.style.animationDelay = '0s';
+  await delay(300);
+  container.scrollTop = container.scrollHeight;
+  return b;
+}
+
+function clearChat(chatId) {
+  const c = document.getElementById(chatId);
+  c.innerHTML = '';
+  const d = document.createElement('div');
+  d.className = 'wa-date';
+  d.textContent = chatId === 'chat2' ? 'July 10 · Arrival Day' : chatId === 'chat3' ? 'July 14 · Day after return' : chatId === 'chat4' ? 'Now · In-Store' : 'Today';
+  c.appendChild(d);
+}
+
+// ─── CHAT 1: PRE-ARRIVAL ───
+async function startChat1() {
+  clearChat('chat1');
+  const c = document.getElementById('chat1');
+
+  // Animate desc cards
+  ['d1s1','d1s2','d1s3','d1s4'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+  });
+
+  await delay(600);
+  await typeMsg(c, '👗 <strong>Hey! Welcome to MUSINSA.</strong><br>Korea\'s #1 K-fashion platform.<br><br>I\'ll set you up with:<br>✅ Store info near YOUR hotel<br>✅ This season\'s hottest drops<br>✅ An exclusive coupon 🎁<br><br>Just 3 quick questions — ready?<br>Reply YES 👇', false, 1000);
+
+  document.getElementById('d1s1').classList.add('visible');
+  await delay(500);
+  await typeMsg(c, 'YES! 🙌', true, 0);
+
+  await delay(400);
+  await typeMsg(c, '📅 <strong>When are you arriving in Korea?</strong><br><br>Type your arrival date:<br><span style="color:#999;font-size:10px">Example: July 10, 2026</span>', false, 1000);
+
+  document.getElementById('d1s2').classList.add('visible');
+  await delay(400);
+  await typeMsg(c, 'July 10, 2026 ✈️', true, 0);
+
+  await delay(300);
+  await typeMsg(c, '✅ July 10 — saved!<br>How many days in Seoul?', false, 800);
+
+  await delay(300);
+  await typeMsg(c, '4 days 😊', true, 0);
+
+  await delay(300);
+  await typeMsg(c, '📍 <strong>Which area are you staying in?</strong>', false, 700);
+
+  const qr1 = addQuickReplies(c, [
+    '1️⃣ 홍대/Hongdae ⭐', '2️⃣ 성수/Seongsu ⭐',
+    '3️⃣ 명동/Myeongdong', '4️⃣ 강남/Gangnam'
+  ], 0);
+  qr1.style.animationDelay = '0s';
+
+  document.getElementById('d1s3').classList.add('visible');
+  await delay(800);
+  await typeMsg(c, '1️⃣ Hongdae 🏠', true, 0);
+
+  await delay(300);
+  await typeMsg(c, '🎉 Hongdae! MUSINSA STANDARD is literally 3 min from most hotels there!<br><br>🧢 <strong>What\'s your style?</strong>', false, 900);
+
+  const qr2 = addQuickReplies(c, [
+    '1️⃣ Streetwear / Urban', '2️⃣ Minimal / Clean',
+    '3️⃣ K-pop / Trendy', '4️⃣ All of the above 😄'
+  ], 0);
+  qr2.style.animationDelay = '0s';
+
+  await delay(700);
+  await typeMsg(c, '1️⃣ Streetwear 🔥', true, 0);
+
+  await delay(300);
+  await typeMsg(c, '🙌 Perfect pick! Almost done —<br><br>Create your free MUSINSA account to unlock your coupon:<br><br>👉 <span style="color:#128C7E;font-weight:700;text-decoration:underline">musinsa.com/global/join</span><br><br><span style="color:#999;font-size:10px">30 seconds — coupon drops instantly after signup!</span>', false, 1000);
+
+  document.getElementById('d1s4').classList.add('visible');
+  await delay(1200);
+  await typeMsg(c, '✅ I signed up!', true, 0);
+
+  await delay(300);
+  await typeMsg(c, '🎉 <strong>You\'re officially a MUSINSA member!</strong><br><br>Here\'s your Seoul Welcome Coupon:<br><br><div class="wa-coupon"><div class="wa-coupon-title">🏷️ WELCOME COUPON · MUSINSA</div><div class="wa-coupon-code">MU-WA-2026</div><div class="wa-coupon-sub">무신사 스탠다드 전 매장 · July 10~13 유효</div><div class="wa-coupon-pct">15%<br><span style="font-size:11px;font-weight:700">OFF</span></div></div><br>📌 Save this chat — I\'ll message you when you land in Seoul! ✈️', false, 1200);
+
+  c.scrollTop = c.scrollHeight;
+}
+
+// ─── CHAT 2: ON-GROUND ───
+async function startChat2() {
+  clearChat('chat2');
+  const c = document.getElementById('chat2');
+
+  ['d2s1','d2s2','d2s3','d2s4'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+  });
+
+  document.getElementById('d2s1').classList.add('visible');
+  await delay(600);
+  await typeMsg(c, '🇰🇷 <strong>TODAY IS THE DAY, Maria!</strong><br><br>Are you in Seoul yet?', false, 800);
+
+  const qr = addQuickReplies(c, [
+    '1️⃣ 네, 도착했어요! 🙌', '2️⃣ 오늘 오후 도착해요', '3️⃣ 일정 변경됐어요'
+  ], 0);
+  qr.style.animationDelay = '0s';
+
+  await delay(800);
+  await typeMsg(c, '1️⃣ Yes, just arrived! 🙌', true, 0);
+
+  document.getElementById('d2s2').classList.add('visible');
+  await delay(400);
+  await typeMsg(c, '🔥 <strong>TODAY\'S HOTTEST at Hongdae:</strong>', false, 900);
+
+  await delay(200);
+  // Product cards
+  const prod = document.createElement('div');
+  prod.className = 'bubble bot';
+  prod.innerHTML = `
+    <div class="wa-product">
+      <div class="wa-product-img">👕</div>
+      <div class="wa-product-info">
+        <div class="wa-product-name">Ader Error — Oversized Logo Tee</div>
+        <div class="wa-product-sub">오늘 신상 입고 · 재고 소량</div>
+        <div class="wa-product-badge">🔥 TRENDING</div>
+      </div>
+    </div>
+    <div class="wa-product" style="margin-top:6px;">
+      <div class="wa-product-img">🧥</div>
+      <div class="wa-product-info">
+        <div class="wa-product-name">디스이즈네버댓 — Coaches Jacket</div>
+        <div class="wa-product-sub">외국인 최애 픽 · 사이즈 XS~XL</div>
+        <div class="wa-product-badge" style="background:#FF5200;">⭐ STAFF PICK</div>
+      </div>
+    </div>
+    <div class="bubble-time">10:00</div>`;
+  prod.style.animationDelay = '0s';
+  c.appendChild(prod);
+  c.scrollTop = c.scrollHeight;
+
+  document.getElementById('d2s3').classList.add('visible');
+  await delay(1000);
+  await typeMsg(c, '🏷️ <strong>Your coupon is NOW ACTIVE:</strong><br><br><div style="background:#e8f5e9;border-radius:8px;padding:10px;border-left:3px solid #25D366;"><span style="font-size:13px;font-weight:900;color:#1b5e20">MU-WA-2026</span><br><span style="font-size:10px;color:#555">15% OFF · Show this chat at checkout</span></div><br>📍 MUSINSA STANDARD Hongdae<br><span style="color:#128C7E;font-size:10px;text-decoration:underline">→ 지도 링크 (3 min walk)</span><br><span style="color:#999;font-size:10px">Open now until 9PM</span>', false, 1000);
+
+  document.getElementById('d2s4').classList.add('visible');
+  await delay(1500);
+  await typeMsg(c, '⏰ <strong>Tomorrow Flash Deal:</strong><br>Andersson Bell 신상 — 오전만 20% 추가 할인<br><span style="color:#999;font-size:10px">내일 오전 10시 알림 보내드릴게요!</span>', false, 1200);
+
+  c.scrollTop = c.scrollHeight;
+}
+
+// ─── CHAT 3: POST-VISIT ───
+async function startChat3() {
+  clearChat('chat3');
+  const c = document.getElementById('chat3');
+
+  ['d3s1','d3s2','d3s3','d3s4'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+  });
+
+  document.getElementById('d3s1').classList.add('visible');
+  await delay(600);
+  await typeMsg(c, '✈️ <strong>Hope Seoul was incredible, Maria!</strong><br><br>Did you make it back home safely?', false, 900);
+
+  const qr1 = addQuickReplies(c, ['1️⃣ Yes, back home! 🏠', '2️⃣ Still in Korea 😄'], 0);
+  qr1.style.animationDelay = '0s';
+
+  await delay(700);
+  await typeMsg(c, '1️⃣ Yes, back home! 🏠', true, 0);
+
+  await delay(300);
+  await typeMsg(c, '🛍️ <strong>Didn\'t grab everything?</strong><br><br>MUSINSA ships worldwide 🌍<br><span style="color:#128C7E;text-decoration:underline">→ musinsa.com/global</span><br><br>Your member coupon <strong>MU-WA-2026</strong> works online too!', false, 1000);
+
+  document.getElementById('d3s2').classList.add('visible');
+  await delay(1000);
+  await typeMsg(c, '📊 <strong>Quick survey — 90 seconds:</strong><br><br>다음 한국 방문 계획은?', false, 1100);
+
+  const qr2 = addQuickReplies(c, [
+    '1️⃣ 3개월 내 🔥', '2️⃣ 6개월 내',
+    '3️⃣ 1년 내', '4️⃣ 미정'
+  ], 0);
+  qr2.style.animationDelay = '0s';
+
+  await delay(700);
+  await typeMsg(c, '1️⃣ 3개월 내 🔥', true, 0);
+
+  document.getElementById('d3s3').classList.add('visible');
+  await delay(400);
+  await typeMsg(c, '🎉 <strong>VIP Return Member 등록 완료!</strong><br><br>다음 방문을 위한 특별 쿠폰:<br><br><div class="wa-coupon"><div class="wa-coupon-title">⭐ VIP RETURN COUPON</div><div class="wa-coupon-code">VIP-RETURN-2026</div><div class="wa-coupon-sub">다음 방한 시 무신사 스탠다드 전 매장 사용 가능</div><div class="wa-coupon-pct">20%<br><span style="font-size:11px;font-weight:700">OFF</span></div></div>', false, 1100);
+
+  document.getElementById('d3s4').classList.add('visible');
+  await delay(1200);
+  await typeMsg(c, '👯 <strong>친구도 서울 가나요?</strong><br><br>이 링크 공유하면:<br>→ 친구: 무신사 15% 쿠폰<br>→ 나: 5,000 무신사 포인트 🎁<br><br><span style="color:#128C7E;font-weight:700;text-decoration:underline">→ 친구에게 공유하기</span>', false, 1000);
+
+  c.scrollTop = c.scrollHeight;
+}
+
+// ─── CHAT 4: QR STORE ───
+async function startChat4() {
+  clearChat('chat4');
+  const c = document.getElementById('chat4');
+
+  ['d4s1','d4s2','d4s3'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+  });
+
+  document.getElementById('d4s1').classList.add('visible');
+  await delay(600);
+  await typeMsg(c, '👗 <strong>You just scanned MUSINSA!</strong><br><br>Korea\'s #1 K-fashion platform.<br>Get an INSTANT coupon — just 1 min:<br><br>What\'s your name? 😊', false, 900);
+
+  await delay(600);
+  await typeMsg(c, 'Emma 👋', true, 0);
+
+  document.getElementById('d4s2').classList.add('visible');
+  await delay(300);
+  await typeMsg(c, '✨ Hi Emma!<br><br>Create your free account to unlock 10% OFF:<br><br>👉 <span style="color:#128C7E;font-weight:700;text-decoration:underline">musinsa.com/global/join</span><br><br><span style="color:#999;font-size:10px">20 seconds — coupon sent immediately!</span>', false, 1000);
+
+  await delay(1000);
+  await typeMsg(c, '✅ Done! Signed up!', true, 0);
+
+  await delay(400);
+  await typeMsg(c, '🎁 <strong>HERE\'S YOUR COUPON, Emma!</strong><br><br><div class="wa-coupon"><div class="wa-coupon-title">🏪 IN-STORE COUPON · TODAY ONLY</div><div class="wa-coupon-code">STORE-HGD-7829</div><div class="wa-coupon-sub">MUSINSA STANDARD Hongdae · 오늘만 유효</div><div class="wa-coupon-pct">10%<br><span style="font-size:11px;font-weight:700">OFF</span></div></div><br>💬 <strong>Show this screen at the checkout now!</strong> 🛍️', false, 1100);
+
+  document.getElementById('d4s3').classList.add('visible');
+  await delay(1200);
+  await typeMsg(c, '🎉 구매 완료되셨나요?<br><br>귀국 후에도 온라인으로 계속 쇼핑하세요!<br>→ <span style="color:#128C7E;text-decoration:underline">musinsa.com/global</span><br><br>한국 여행 잘 마무리하세요 ✈️ 🇰🇷', false, 1100);
+
+  c.scrollTop = c.scrollHeight;
+}
+
+// ─── INIT: auto-start all chats ───
+window.addEventListener('load', async () => {
+  await delay(500);
+  startChat1();
+  await delay(800);
+  startChat2();
+  await delay(1000);
+  startChat3();
+  await delay(600);
+  startChat4();
+});
+
+// ─── IntersectionObserver for desc cards ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.id;
+      if (id === 'chat1' || e.target.closest('#desc1')) {
+        document.querySelectorAll('#desc1 .desc-step').forEach((el,i) => {
+          setTimeout(() => el.classList.add('visible'), i * 200);
+        });
+      }
+    }
+  });
+}, { threshold: 0.3 });
+</script>
+</body>
+</html>
