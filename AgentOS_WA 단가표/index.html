@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentOS 단가표 — Infobip</title>
+<style>
+  :root {
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --orange-border: #fed7aa;
+    --blue: #1e3a5f;
+    --gray: #64748b;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', -apple-system, sans-serif;
+    background: var(--bg);
+    color: #0f172a;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    color: white;
+    padding: 32px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  header .title-block h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+  header .title-block p  { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+  header .badge {
+    background: var(--orange);
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .main { max-width: 1100px; margin: 32px auto; padding: 0 24px 60px; }
+
+  /* ── Section title ── */
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray);
+    margin: 32px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  /* ── Price cards ── */
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 36px;
+  }
+  .price-card {
+    background: var(--card);
+    border-radius: 14px;
+    border: 2px solid var(--border);
+    padding: 24px;
+    text-align: center;
+    position: relative;
+    transition: box-shadow 0.2s;
+  }
+  .price-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
+  .price-card.standard { border-color: var(--orange); }
+  .price-card.d10 { border-color: #22c55e; }
+  .price-card.d20 { border-color: var(--purple); }
+  .price-card .card-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .price-card.standard .card-label { color: var(--orange); }
+  .price-card.d10 .card-label { color: #16a34a; }
+  .price-card.d20 .card-label { color: var(--purple); }
+
+  .price-card .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .price-card.standard .tag { background: #fff7ed; color: var(--orange); }
+  .price-card.d10 .tag { background: var(--green-light); color: #15803d; }
+  .price-card.d20 .tag { background: var(--purple-light); color: var(--purple); }
+
+  .price-row { margin: 10px 0; }
+  .price-row .label { font-size: 12px; color: var(--gray); margin-bottom: 2px; }
+  .price-row .amount {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+  .price-card.standard .price-row .amount { color: var(--orange); }
+  .price-card.d10 .price-row .amount { color: #16a34a; }
+  .price-card.d20 .price-row .amount { color: var(--purple); }
+  .price-row .unit { font-size: 13px; font-weight: 500; color: var(--gray); margin-left: 2px; }
+
+  .divider-line { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+  .saving-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-top: 6px;
+  }
+  .d10 .saving-badge { background: var(--green-light); color: #15803d; }
+  .d20 .saving-badge { background: var(--purple-light); color: var(--purple); }
+
+  /* ── Feature table ── */
+  .feature-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+  }
+  .feature-table thead tr {
+    background: linear-gradient(135deg, #1e3a5f, #2563eb);
+    color: white;
+  }
+  .feature-table thead th {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .feature-table thead th:first-child { border-radius: 0; }
+  .feature-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .feature-table tbody tr:last-child { border-bottom: none; }
+  .feature-table tbody tr:hover { background: #f8fafc; }
+  .feature-table tbody tr.group-header {
+    background: #f1f5f9;
+  }
+  .feature-table tbody tr.group-header td {
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--blue);
+    padding: 10px 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .feature-table td {
+    padding: 12px 18px;
+    font-size: 13px;
+    vertical-align: middle;
+  }
+  .feature-table td:nth-child(1) { width: 22%; font-weight: 600; color: #1e293b; }
+  .feature-table td:nth-child(2) { width: 38%; color: #475569; }
+  .feature-table td:nth-child(3) { width: 20%; }
+  .feature-table td:nth-child(4) { width: 20%; }
+
+  .check {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .check.yes { color: #16a34a; }
+  .check.add { color: var(--orange); }
+
+  .chip {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .chip.core   { background: #dbeafe; color: #1d4ed8; }
+  .chip.market { background: #fef3c7; color: #92400e; }
+  .chip.data   { background: #d1fae5; color: #065f46; }
+  .chip.auto   { background: #ede9fe; color: #6d28d9; }
+  .chip.api    { background: #f1f5f9; color: #475569; }
+
+  /* ── Footnote ── */
+  .footnote {
+    margin-top: 28px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+  .footnote h4 { font-size: 13px; color: var(--blue); margin-bottom: 10px; font-weight: 700; }
+  .footnote ul { padding-left: 18px; }
+  .footnote ul li { font-size: 12px; color: var(--gray); margin-bottom: 5px; }
+  .footnote ul li strong { color: #0f172a; }
+
+  /* ── Print / export note ── */
+  .export-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+  }
+  .export-bar button {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+  }
+  .export-bar button:hover { background: #1d4ed8; }
+
+  @media print {
+    header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .export-bar { display: none; }
+    .price-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title-block">
+    <h1>🤖 AgentOS 제안 단가표</h1>
+    <p>WhatsApp 기반 플랫폼 패키지 · Infobip Korea KJ Squad</p>
+  </div>
+  <div class="badge">기준일: 2026-06-02</div>
+</header>
+
+<div class="main">
+
+  <div class="export-bar">
+    <button onclick="window.print()">🖨️ 인쇄 / PDF 저장</button>
+  </div>
+
+  <!-- ── 요금 카드 ── -->
+  <div class="section-title">💰 요금 구조</div>
+  <div class="price-grid">
+
+    <!-- 정가 -->
+    <div class="price-card standard">
+      <div class="card-label">정가 (Standard)</div>
+      <span class="tag">기본가</span>
+      <div class="price-row">
+        <div class="label">플랫폼 이용료 (월정액)</div>
+        <div class="amount">650,000<span class="unit">원/월</span></div>
+      </div>
+    </div>
+
+    <!-- 10% 할인 -->
+    <div class="price-card d10">
+      <div class="card-label">10% 할인 적용가</div>
+      <span class="tag">▼ 10% DC</span>
+      <div class="price-row">
+        <div class="label">플랫폼 이용료 (월정액)</div>
+        <div class="amount">585,000<span class="unit">원/월</span></div>
+      </div>
+      <div class="saving-badge">월 65,000원 절감</div>
+    </div>
+
+    <!-- 20% 할인 -->
+    <div class="price-card d20">
+      <div class="card-label">20% 할인 적용가</div>
+      <span class="tag">▼ 20% DC</span>
+      <div class="price-row">
+        <div class="label">플랫폼 이용료 (월정액)</div>
+        <div class="amount">520,000<span class="unit">원/월</span></div>
+      </div>
+      <div class="saving-badge">월 130,000원 절감</div>
+    </div>
+
+  </div>
+
+  <!-- ── 채널 비용 별도 안내 ── -->
+  <div class="section-title">📡 채널 비용 (별도 청구 · 예시)</div>
+  <table class="feature-table" style="margin-bottom:0;">
+    <thead>
+      <tr>
+        <th style="width:28%">비용 항목</th>
+        <th style="width:42%">설명</th>
+        <th style="width:30%">단가</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>💬 WhatsApp<br><small style="color:#94a3b8;">Marketing</small></td>
+        <td>마케팅 목적 발송 (프로모션, 쿠폰 등)<br><small style="color:#94a3b8;">Meta Conversation Fee</small></td>
+        <td><strong>건당 부가 (협의)</strong></td>
+      </tr>
+      <tr>
+        <td>💬 WhatsApp<br><small style="color:#94a3b8;">Utility</small></td>
+        <td>거래/알림 목적 발송 (주문확인, 배송 등)</td>
+        <td><strong>건당 부가 (협의)</strong></td>
+      </tr>
+      <tr>
+        <td>💬 WhatsApp<br><small style="color:#94a3b8;">Authentication</small></td>
+        <td>OTP / 인증 코드 발송</td>
+        <td><strong>건당 부가 (협의)</strong></td>
+      </tr>
+      <tr>
+        <td>💬 WhatsApp<br><small style="color:#94a3b8;">Service</small></td>
+        <td>고객 문의 응대 (24시간 이내 인바운드)</td>
+        <td><strong>건당 부가 (협의)</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ── 기능 테이블 ── -->
+  <div class="section-title">📋 포함 기능 목록 (Journey · Inbox 제외)</div>
+  <table class="feature-table">
+    <thead>
+      <tr>
+        <th>기능명</th>
+        <th>설명</th>
+        <th>구분</th>
+        <th>포함 여부</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- People / CDP -->
+      <tr class="group-header"><td colspan="4">👥 People (고객 데이터 플랫폼)</td></tr>
+      <tr>
+        <td>People CDP</td>
+        <td>고객 프로필 통합 관리, 360° 뷰 제공</td>
+        <td><span class="chip data">CDP</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>연락처 관리</td>
+        <td>연락처 생성, 수정, 삭제, 태그 관리</td>
+        <td><span class="chip data">CDP</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>오디언스 세그먼트</td>
+        <td>조건 기반 동적/정적 세그먼트 생성</td>
+        <td><span class="chip data">CDP</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>커스텀 속성</td>
+        <td>고객별 커스텀 필드 정의 및 저장</td>
+        <td><span class="chip data">CDP</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>이벤트 트래킹</td>
+        <td>고객 행동 이벤트 수집 및 프로필 연동</td>
+        <td><span class="chip data">CDP</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+
+      <!-- Broadcast -->
+      <tr class="group-header"><td colspan="4">📢 Broadcast (대량 발송)</td></tr>
+      <tr>
+        <td>브로드캐스트 캠페인</td>
+        <td>세그먼트 대상 WhatsApp 대량 발송</td>
+        <td><span class="chip market">마케팅</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>발송 예약</td>
+        <td>특정 일시 예약 발송 설정</td>
+        <td><span class="chip market">마케팅</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>A/B 테스트</td>
+        <td>메시지 변형 테스트 및 성과 비교</td>
+        <td><span class="chip market">마케팅</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>발송 리포트</td>
+        <td>전송률, 오픈율, 클릭률, 읽음 확인</td>
+        <td><span class="chip market">마케팅</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+
+      <!-- WhatsApp Channel -->
+      <tr class="group-header"><td colspan="4">💬 WhatsApp 채널 기능</td></tr>
+      <tr>
+        <td>WhatsApp Business API</td>
+        <td>공식 Meta WABA 연동 및 발송</td>
+        <td><span class="chip core">채널</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>메시지 템플릿 관리</td>
+        <td>HSM 템플릿 생성, 수정, Meta 심사 관리</td>
+        <td><span class="chip core">채널</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>리치 미디어 지원</td>
+        <td>이미지, 동영상, 문서, 위치 첨부 발송</td>
+        <td><span class="chip core">채널</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>인터랙티브 메시지</td>
+        <td>버튼, 리스트, 카탈로그, 플로우 메시지</td>
+        <td><span class="chip core">채널</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>읽음 확인 (Seen)</td>
+        <td>수신자 메시지 열람 여부 웹훅 수신</td>
+        <td><span class="chip core">채널</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>전송 상태 리포트</td>
+        <td>전송/배달/실패 상태 실시간 DLR 웹훅</td>
+        <td><span class="chip core">채널</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+
+      <!-- Analytics -->
+      <tr class="group-header"><td colspan="4">📊 Analytics (분석 및 리포팅)</td></tr>
+      <tr>
+        <td>캠페인 성과 대시보드</td>
+        <td>발송 통계, 전환율, 채널별 성과 시각화</td>
+        <td><span class="chip data">분석</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>실시간 리포팅</td>
+        <td>메시지 상태 실시간 모니터링</td>
+        <td><span class="chip data">분석</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+      <tr>
+        <td>커스텀 리포트 다운로드</td>
+        <td>기간별 CSV/Excel 원시 데이터 추출</td>
+        <td><span class="chip data">분석</span></td>
+        <td><span class="check yes">✅ 포함</span></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!-- ── 각주 ── -->
+  <div class="footnote">
+    <h4>📌 단가 산정 기준 및 유의사항</h4>
+    <ul>
+      <li><strong>플랫폼 이용료</strong>는 월정액 고정 비용이며, 발송 건수와 무관하게 청구됩니다.</li>
+      <li><strong>프로세스 단가</strong>는 WhatsApp 메시지 1건당 Infobip 처리 비용이며, Meta WhatsApp 발송 요금(Conversation fee)은 별도 청구됩니다.</li>
+      <li>10% / 20% 할인은 연간 계약 또는 최소 볼륨 보장 조건 충족 시 적용 가능합니다.</li>
+      <li>Journey, Inbox(Conversations) 기능은 본 패키지에 포함되지 않으며 별도 견적 문의 바랍니다.</li>
+      <li>AgentOS 기능(AI Agent, Agentic Flow 등)은 본 단가표와 별도로 협의됩니다.</li>
+      <li>모든 금액은 VAT 별도 기준입니다.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
