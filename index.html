@@ -1,38 +1,775 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Scenarios</title>
-  <link rel="icon" type="image/png" href="assets/infobip-logo.png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infobip AgentOS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <style>
-    body {
-      font-family: sans-serif;
-      max-width: 600px;
-      margin: 60px auto;
-      padding: 0 20px;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #0d1b2a;
+      --accent: #e8441a;
+      --background: #f8f7f4;
+      --foreground: #0d1b2a;
+      --card: #ffffff;
+      --border: #e4e2dd;
+      --muted: #6b6860;
+      --secondary: #f0ede8;
+      --white: #ffffff;
     }
-    h1 { margin-bottom: 32px; }
-    .project-list { display: flex; flex-direction: column; gap: 16px; }
-    .project-btn {
-      display: inline-block;
-      padding: 14px 24px;
-      background: #1a73e8;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 500;
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, .logo-text { font-family: 'Syne', sans-serif; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 50;
+      background: rgba(13,27,42,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+    .logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--accent); display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 14px; font-family: 'Syne', sans-serif;
+    }
+    .logo-text { color: #fff; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; }
+    .logo-text span { font-weight: 400; color: rgba(255,255,255,0.6); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      color: rgba(255,255,255,0.65); font-size: 0.875rem; font-weight: 500;
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; color: #fff; padding: 4px; }
+    .mobile-nav {
+      display: none; background: var(--primary);
+      border-top: 1px solid rgba(255,255,255,0.1); padding: 1rem 1.5rem;
+    }
+    .mobile-nav a {
+      display: block; color: rgba(255,255,255,0.65); font-size: 0.875rem;
+      text-decoration: none; padding: 0.625rem 0; transition: color 0.2s;
+    }
+    .mobile-nav a:hover { color: #fff; }
+    .mobile-nav.open { display: block; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 92vh;
+      background: var(--primary); overflow: hidden;
+      display: flex; align-items: center;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; opacity: 0.3;
+    }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--primary) 30%, rgba(13,27,42,0.95) 60%, rgba(13,27,42,0.6));
+    }
+    .hero-content {
+      position: relative; z-index: 10;
+      max-width: 1280px; margin: 0 auto; padding: 6rem 1.5rem 4rem;
+      width: 100%;
+    }
+    .hero-inner { max-width: 640px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.375rem 1rem; border-radius: 999px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    .badge span { color: rgba(255,255,255,0.8); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em; }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800; color: #fff;
+      line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(255,255,255,0.65);
+      line-height: 1.7; margin-bottom: 2.5rem; max-width: 480px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-btns {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--accent); color: #fff;
+      padding: 0.75rem 2rem; border-radius: 8px;
+      font-weight: 600; font-size: 1rem; text-decoration: none;
+      border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #d03a15; transform: translateY(-1px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border: 1px solid rgba(255,255,255,0.3); color: #fff;
+      background: transparent; padding: 0.75rem 2rem; border-radius: 8px;
+      font-weight: 500; font-size: 1rem; text-decoration: none;
       transition: background 0.2s;
     }
-    .project-btn:hover { background: #1558b0; }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); }
+    .hero-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 96px; background: linear-gradient(to top, var(--background), transparent); }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 0; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+    .section-label {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.75rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800;
+      line-height: 1.15; letter-spacing: -0.02em; margin-top: 0.75rem; margin-bottom: 1rem;
+    }
+    .section-title .highlight { color: var(--primary); }
+    .section-sub { color: var(--muted); font-size: 1.1rem; max-width: 560px; line-height: 1.7; margin: 0 auto; }
+    .text-center { text-align: center; }
+    .section-head { margin-bottom: 4rem; }
+
+    /* ── CHANNELS ── */
+    #channels { background: var(--background); }
+    .channels-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem;
+    }
+    .channel-card {
+      background: var(--card); border-radius: 16px;
+      border: 1px solid var(--border); padding: 1.5rem 1rem;
+      text-align: center; transition: box-shadow 0.3s, border-color 0.3s, transform 0.2s;
+      opacity: 0; animation: fadeUp 0.5s ease forwards;
+    }
+    .channel-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); border-color: rgba(232,68,26,0.3); transform: translateY(-2px); }
+    .ch-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem;
+      transition: transform 0.3s;
+    }
+    .channel-card:hover .ch-icon { transform: scale(1.1); }
+    .ch-icon svg { width: 20px; height: 20px; color: #fff; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .channel-card span { font-size: 0.8rem; font-weight: 600; color: var(--foreground); }
+
+    .bg-blue-500   { background: #3b82f6; }
+    .bg-green-500  { background: #22c55e; }
+    .bg-pink-500   { background: #ec4899; }
+    .bg-blue-600   { background: #2563eb; }
+    .bg-yellow-500 { background: #eab308; }
+    .bg-purple-500 { background: #a855f7; }
+    .bg-sky-500    { background: #0ea5e9; }
+    .bg-emerald-500{ background: #10b981; }
+    .bg-red-500    { background: #ef4444; }
+    .bg-indigo-500 { background: #6366f1; }
+
+    /* ── PRODUCTS ── */
+    #products { background: var(--secondary); }
+    .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .product-card {
+      border-radius: 20px; border: 1px solid rgba(0,0,0,0.07);
+      padding: 2rem; transition: box-shadow 0.4s, border-color 0.4s, transform 0.2s;
+      opacity: 0; animation: fadeUp 0.6s ease forwards;
+    }
+    .product-card:hover { box-shadow: 0 16px 48px rgba(0,0,0,0.1); border-color: rgba(232,68,26,0.2); transform: translateY(-2px); }
+    .product-card-inner { display: flex; gap: 1.25rem; align-items: flex-start; }
+    .prod-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .product-card:hover .prod-icon { transform: scale(1.05); }
+    .prod-icon svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .prod-name { font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 0.4rem; }
+    .prod-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--foreground); margin-bottom: 0.5rem; }
+    .prod-desc { color: var(--muted); font-size: 0.875rem; line-height: 1.7; margin-bottom: 1rem; }
+    .prod-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .prod-tag {
+      font-size: 0.75rem; font-weight: 500; padding: 0.25rem 0.75rem;
+      border-radius: 999px; background: rgba(255,255,255,0.8);
+      color: rgba(13,27,42,0.6); border: 1px solid rgba(0,0,0,0.07);
+    }
+
+    .grad-blue    { background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(99,102,241,0.1)); }
+    .grad-emerald { background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(20,184,166,0.1)); }
+    .grad-violet  { background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(168,85,247,0.1)); }
+    .grad-orange  { background: linear-gradient(135deg, rgba(249,115,22,0.1), rgba(245,158,11,0.1)); }
+
+    .icon-blue    { background: #3b82f6; }
+    .icon-emerald { background: #10b981; }
+    .icon-violet  { background: #8b5cf6; }
+    .icon-orange  { background: #f97316; }
+
+    /* ── FEATURES ── */
+    #features { background: var(--background); }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .feature-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      opacity: 0; animation: fadeUp 0.5s ease forwards;
+    }
+    .feat-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(13,27,42,0.05);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .feat-icon svg { width: 20px; height: 20px; stroke: var(--primary); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .feat-title { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1rem; margin-bottom: 0.25rem; }
+    .feat-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── CTA ── */
+    .cta-section {
+      position: relative; padding: 6rem 0; overflow: hidden;
+    }
+    .cta-bg { position: absolute; inset: 0; }
+    .cta-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.2; }
+    .cta-overlay { position: absolute; inset: 0; background: rgba(13,27,42,0.95); }
+    .cta-content {
+      position: relative; z-index: 10;
+      max-width: 800px; margin: 0 auto; padding: 0 1.5rem; text-align: center;
+    }
+    .cta-content h2 {
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: #fff;
+      line-height: 1.2; margin-bottom: 1.5rem; letter-spacing: -0.02em;
+    }
+    .cta-content p { color: rgba(255,255,255,0.65); font-size: 1.1rem; margin-bottom: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--foreground); padding: 3rem 0;
+    }
+    .footer-inner {
+      max-width: 1280px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem;
+    }
+    .footer-links { display: flex; align-items: center; gap: 2rem; }
+    .footer-links a { color: rgba(255,255,255,0.45); font-size: 0.875rem; text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: rgba(255,255,255,0.75); }
+    .footer-copy { color: rgba(255,255,255,0.25); font-size: 0.75rem; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── PLAYBOOK ── */
+    #playbook { background: var(--primary); padding: 6rem 0; }
+    #playbook .section-label { color: rgba(232,68,26,0.9); }
+    #playbook .section-title { color: #fff; }
+    #playbook .section-sub { color: rgba(255,255,255,0.5); }
+
+    .pb-filter-row {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 2.5rem; justify-content: center;
+    }
+    .pb-filter {
+      padding: 0.35rem 1rem; border-radius: 999px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.03em;
+      border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.55);
+      background: transparent; cursor: pointer; transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .pb-filter:hover { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.85); }
+    .pb-filter.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    .pb-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.1rem;
+    }
+
+    .pb-folder {
+      position: relative; border-radius: 16px; padding: 1.6rem 1.4rem 1.25rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      cursor: pointer; transition: all 0.25s;
+      display: flex; flex-direction: column; gap: 0.6rem;
+      opacity: 0; animation: fadeUp 0.4s ease forwards;
+    }
+    .pb-folder:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    }
+    .pb-folder.hidden { display: none; }
+
+    .pb-folder-tab {
+      position: absolute; top: -1px; left: 12px;
+      width: 32px; height: 5px; border-radius: 3px 3px 0 0;
+    }
+    .pb-ch-pill {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.25rem 0.65rem; border-radius: 5px; width: fit-content;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 0.25rem;
+    }
+    .pb-folder-name {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 1rem; color: #fff; line-height: 1.35;
+    }
+    .pb-keyword {
+      font-size: 0.82rem; color: rgba(255,255,255,0.4);
+      font-family: 'DM Sans', sans-serif; line-height: 1.5;
+    }
+    .pb-folder-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto; padding-top: 0.65rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .pb-client {
+      display: flex; align-items: center; gap: 0.35rem;
+    }
+    .pb-client-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--ch); flex-shrink: 0;
+      box-shadow: 0 0 8px var(--ch), 0 0 16px color-mix(in srgb, var(--ch) 50%, transparent);
+    }
+    .pb-client-name {
+      font-size: 0.95rem; font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      font-family: 'Syne', sans-serif;
+      text-shadow: 0 0 20px rgba(255,255,255,0.15);
+    }
+    .pb-arrow {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .pb-folder:hover .pb-arrow { background: var(--accent); }
+    .pb-arrow svg { width: 12px; height: 12px; stroke: rgba(255,255,255,0.6); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .pb-folder:hover .pb-arrow svg { stroke: #fff; }
+
+    /* channel color themes */
+    .ch-wa   { --ch: #25D366; }
+    .ch-sms  { --ch: #3b82f6; }
+    .ch-rcs  { --ch: #6366f1; }
+    .ch-ig   { --ch: #e1306c; }
+    .ch-fb   { --ch: #1877f2; }
+    .ch-voice{ --ch: #10b981; }
+    .ch-email{ --ch: #f59e0b; }
+    .ch-kk   { --ch: #FAE100; }
+    .ch-vib  { --ch: #7360f2; }
+    .ch-push { --ch: #ef4444; }
+
+    .pb-folder-tab  { background: var(--ch); }
+    .pb-ch-pill     { background: color-mix(in srgb, var(--ch) 18%, transparent); color: var(--ch); border: 1px solid color-mix(in srgb, var(--ch) 30%, transparent); }
+
+    @media (max-width: 1100px) { .pb-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 760px)  { .pb-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px)  { .pb-grid { grid-template-columns: repeat(1, 1fr); } }
+
+    /* ── END PLAYBOOK ── */
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .channels-grid { grid-template-columns: repeat(3, 1fr); }
+      .products-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .channels-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+
+    /* SVG icon helpers */
+    svg { display: inline-block; vertical-align: middle; }
   </style>
 </head>
 <body>
-  <h1>Scenarios</h1>
-  <div class="project-list">
-    <a class="project-btn" href="https://kjsquados.github.io/wa-launch-order-chatbot" target="_blank" rel="noopener noreferrer">wa-launch-order-chatbot</a>
-    <a class="project-btn" href="https://kjsquados.github.io/whatsapp-usecase" target="_blank" rel="noopener noreferrer">whatsapp-usecase</a>
-  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <div class="logo-icon">i</div>
+        <span class="logo-text">Infobip <span>AgentOS</span></span>
+      </a>
+      <div class="nav-links">
+        <a href="#playbook">Playbook</a>
+        <a href="#channels">채널</a>
+        <a href="#products">솔루션</a>
+        <a href="#features">기능</a>
+      </div>
+      <button class="hamburger" onclick="toggleMobile()" aria-label="메뉴">
+        <svg id="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg id="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#playbook" onclick="closeMobile()">Playbook</a>
+      <a href="#channels" onclick="closeMobile()">채널</a>
+      <a href="#products" onclick="closeMobile()">솔루션</a>
+      <a href="#features" onclick="closeMobile()">기능</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://media.base44.com/images/public/6a1d1ff102d73e4259b14ac4/508fd857d_generated_image.png" alt="" />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-inner">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          <span>AI-Powered Customer Engagement</span>
+        </div>
+        <h1>고객과의 모든 대화를<br /><span class="accent">하나의 플랫폼</span>에서</h1>
+        <p>SMS, WhatsApp, 카카오톡부터 Voice, Video까지. AgentOS로 옴니채널 고객 경험을 설계하세요.</p>
+        <div class="hero-btns">
+          <a href="#" class="btn-primary">
+            지금 시작하기
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#products" class="btn-outline">솔루션 둘러보기</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-fade"></div>
+  </section>
+
+  <!-- PLAYBOOK -->
+  <section id="playbook">
+    <div class="container">
+      <div class="section-head text-center">
+        <div class="section-label">Playbook Library</div>
+        <h2 class="section-title">바로 실행하는 캠페인 플레이북</h2>
+        <p class="section-sub">채널별·목적별로 큐레이션된 30개 플레이북. 폴더를 선택해 즉시 실행하세요.</p>
+      </div>
+      <div class="pb-filter-row" id="pbFilters"></div>
+      <div class="pb-grid" id="pbGrid"></div>
+    </div>
+  </section>
+
+  <!-- CHANNELS -->
+  <section id="channels">
+    <div class="container">
+      <div class="section-head text-center">
+        <div class="section-label">Omnichannel</div>
+        <h2 class="section-title">10개 이상의 채널, <span class="highlight">하나의 플랫폼</span></h2>
+        <p class="section-sub">고객이 선호하는 채널에서 만나세요. 모든 대화를 하나의 플랫폼에서 통합 관리합니다.</p>
+      </div>
+      <div class="channels-grid" id="channelsGrid"></div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="container">
+      <div class="section-head text-center">
+        <div class="section-label">Solutions</div>
+        <h2 class="section-title">AgentOS 솔루션</h2>
+        <p class="section-sub">비즈니스에 필요한 솔루션을 모듈형으로 조합하세요</p>
+      </div>
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="container">
+      <div class="section-head text-center">
+        <div class="section-label">Why Infobip</div>
+        <h2 class="section-title">왜 AgentOS인가</h2>
+      </div>
+      <div class="features-grid" id="featuresGrid"></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-bg">
+      <img src="https://media.base44.com/images/public/6a1d1ff102d73e4259b14ac4/c91c83539_generated_image.png" alt="" />
+    </div>
+    <div class="cta-overlay"></div>
+    <div class="cta-content">
+      <h2>고객 경험의 새로운 기준,<br />지금 시작하세요</h2>
+      <p>Infobip AgentOS와 함께 옴니채널 고객 커뮤니케이션을 시작하세요.</p>
+      <a href="#" class="btn-primary" style="display:inline-flex">
+        Infobip 팀에 문의하기
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="logo">
+        <div class="logo-icon" style="width:28px;height:28px;font-size:12px;">i</div>
+        <span class="logo-text">Infobip AgentOS</span>
+      </div>
+      <div class="footer-links">
+        <a href="#channels">채널</a>
+        <a href="#products">솔루션</a>
+        <a href="#features">기능</a>
+      </div>
+      <p class="footer-copy">© 2026 Infobip. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── SCROLL-TRIGGERED ANIMATION ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '';
+          e.target.style.animationPlayState = 'running';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // ── PLAYBOOK DATA ──
+    const PLAYBOOKS = [
+      // WhatsApp
+      { ch:"WhatsApp", cls:"ch-wa",   keyword:"CTWA",           desc:"Click-to-WhatsApp 광고 전환",   client:"Lotte ON"       },
+      { ch:"WhatsApp", cls:"ch-wa",   keyword:"Re-engagement",  desc:"휴면 고객 재활성화 시퀀스",       client:"Hyundai Card"   },
+      { ch:"WhatsApp", cls:"ch-wa",   keyword:"Cart Abandon",   desc:"장바구니 이탈 복구 플로우",       client:"Coupang"        },
+      { ch:"WhatsApp", cls:"ch-wa",   keyword:"Onboarding",     desc:"신규 가입자 온보딩 여정",         client:"Kakao Pay"      },
+      { ch:"WhatsApp", cls:"ch-wa",   keyword:"Flash Sale",     desc:"타임딜 긴급 프로모션 발송",       client:"SSG.COM"        },
+      // SMS
+      { ch:"SMS",      cls:"ch-sms",  keyword:"CrossSell",      desc:"구매 이력 기반 교차 판매",        client:"KB국민카드"      },
+      { ch:"SMS",      cls:"ch-sms",  keyword:"OTP / Auth",     desc:"인증번호 & 보안 알림",            client:"신한은행"        },
+      { ch:"SMS",      cls:"ch-sms",  keyword:"Appointment",    desc:"예약 리마인더 자동화",            client:"365mc 병원"     },
+      { ch:"SMS",      cls:"ch-sms",  keyword:"Loyalty",        desc:"포인트·멤버십 리워드 알림",       client:"CJ ONE"         },
+      { ch:"SMS",      cls:"ch-sms",  keyword:"Win-Back",       desc:"이탈 고객 재구매 유도",           client:"GS리테일"        },
+      // RCS
+      { ch:"RCS",      cls:"ch-rcs",  keyword:"Rich Promo",     desc:"버튼·이미지 풍부한 프로모션",     client:"삼성전자"        },
+      { ch:"RCS",      cls:"ch-rcs",  keyword:"Product Launch", desc:"신제품 런칭 인터랙티브 캠페인",   client:"LG전자"         },
+      { ch:"RCS",      cls:"ch-rcs",  keyword:"Survey",         desc:"인앱형 설문·피드백 수집",         client:"우리은행"        },
+      // Instagram
+      { ch:"Instagram",cls:"ch-ig",   keyword:"DM Funnel",      desc:"스토리 반응 → DM 자동 전환",     client:"올리브영"        },
+      { ch:"Instagram",cls:"ch-ig",   keyword:"Influencer",     desc:"인플루언서 협업 리드 수집",       client:"무신사"          },
+      { ch:"Instagram",cls:"ch-ig",   keyword:"UGC Reward",     desc:"유저 콘텐츠 공유 리워드",         client:"에이블씨엔씨"     },
+      // Facebook Messenger
+      { ch:"Messenger",cls:"ch-fb",   keyword:"Lead Gen",       desc:"Messenger 광고 리드 수집",       client:"현대자동차"       },
+      { ch:"Messenger",cls:"ch-fb",   keyword:"Post-Purchase",  desc:"구매 후 CS & 리뷰 수집",         client:"이마트"          },
+      { ch:"Messenger",cls:"ch-fb",   keyword:"Quiz Bot",       desc:"퀴즈형 제품 추천 챗봇",          client:"LG생활건강"      },
+      // Voice
+      { ch:"Voice",    cls:"ch-voice",keyword:"IVR Upsell",     desc:"통화 중 업셀 자동 안내",          client:"SK텔레콤"        },
+      { ch:"Voice",    cls:"ch-voice",keyword:"Missed Call",    desc:"부재중 콜백 자동화",              client:"롯데렌탈"         },
+      { ch:"Voice",    cls:"ch-voice",keyword:"NPS Survey",     desc:"통화 후 NPS 음성 설문",           client:"KT"             },
+      // Email
+      { ch:"Email",    cls:"ch-email",keyword:"Drip Nurture",   desc:"리드 육성 자동 드립 시퀀스",      client:"토스"            },
+      { ch:"Email",    cls:"ch-email",keyword:"Reactivation",   desc:"비활성 구독자 재참여 캠페인",     client:"야놀자"           },
+      { ch:"Email",    cls:"ch-email",keyword:"Anniversary",    desc:"가입 기념일 개인화 발송",         client:"배달의민족"       },
+      // Kakao
+      { ch:"Kakao",    cls:"ch-kk",   keyword:"알림톡 CS",      desc:"주문·배송 상태 자동 알림",        client:"마켓컬리"         },
+      { ch:"Kakao",    cls:"ch-kk",   keyword:"친구톡 Promo",   desc:"카카오 채널 프로모션 발송",        client:"CU편의점"        },
+      // Viber
+      { ch:"Viber",    cls:"ch-vib",  keyword:"Broadcast",      desc:"동남아 타겟 대량 프로모션",        client:"하나투어"         },
+      { ch:"Viber",    cls:"ch-vib",  keyword:"Chatbot CX",     desc:"Viber 채널 CS 자동화",           client:"모두투어"         },
+      // Push
+      { ch:"Push",     cls:"ch-push", keyword:"Geo-Trigger",    desc:"위치 기반 실시간 푸시",            client:"스타벅스 코리아"  },
+    ];
+
+    const ALL_CHANNELS = ['전체', ...new Set(PLAYBOOKS.map(p => p.ch))];
+
+    // render filters
+    const pfRow = document.getElementById('pbFilters');
+    ALL_CHANNELS.forEach((ch, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'pb-filter' + (i === 0 ? ' active' : '');
+      btn.textContent = ch;
+      btn.dataset.ch = ch;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.pb-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterPlaybooks(ch);
+      });
+      pfRow.appendChild(btn);
+    });
+
+    // render folders
+    const pbGrid = document.getElementById('pbGrid');
+    PLAYBOOKS.forEach((pb, i) => {
+      const el = document.createElement('div');
+      el.className = `pb-folder ${pb.cls}`;
+      el.dataset.ch = pb.ch;
+      el.style.animationDelay = (i * 0.04) + 's';
+      el.innerHTML = `
+        <div class="pb-folder-tab"></div>
+        <div class="pb-ch-pill">${pb.ch}</div>
+        <div class="pb-folder-name">${pb.keyword}</div>
+        <div class="pb-keyword">${pb.desc}</div>
+        <div class="pb-folder-footer">
+          <div class="pb-client">
+            <span class="pb-client-dot"></span>
+            <span class="pb-client-name">${pb.client}</span>
+          </div>
+          <div class="pb-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+        </div>`;
+      pbGrid.appendChild(el);
+    });
+
+    function filterPlaybooks(ch) {
+      document.querySelectorAll('.pb-folder').forEach(el => {
+        if (ch === '전체' || el.dataset.ch === ch) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+    }
+
+    // observe playbook folders too
+    document.querySelectorAll('.pb-folder').forEach(el => {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+
+    // ── DATA ──
+    const CHANNELS = [
+      { name: "SMS",                color: "bg-blue-500",    icon: "msg" },
+      { name: "WhatsApp",           color: "bg-green-500",   icon: "msg" },
+      { name: "Instagram",          color: "bg-pink-500",    icon: "hash" },
+      { name: "Facebook Messenger", color: "bg-blue-600",    icon: "msg" },
+      { name: "Kakao",              color: "bg-yellow-500",  icon: "msg" },
+      { name: "Viber",              color: "bg-purple-500",  icon: "msg" },
+      { name: "Zalo",               color: "bg-sky-500",     icon: "msg" },
+      { name: "Voice",              color: "bg-emerald-500", icon: "phone" },
+      { name: "Video",              color: "bg-red-500",     icon: "video" },
+      { name: "RCS",                color: "bg-indigo-500",  icon: "msg" },
+    ];
+
+    const PRODUCTS = [
+      { name: "Broadcast", grad: "grad-blue", iconBg: "icon-blue", icon: "send",
+        title: "대규모 메시징을 스마트하게",
+        desc: "마케팅 캠페인, 프로모션, 공지사항을 멀티채널로 빠르게 발송하세요. 개인화된 대규모 메시징이 가능합니다.",
+        tags: ["통합 메시징 운영", "개인화 대량 발송", "캠페인 성과 분석"] },
+      { name: "Journey", grad: "grad-emerald", iconBg: "icon-emerald", icon: "route",
+        title: "고객 여정을 자동화하세요",
+        desc: "행동 기반 트리거로 고객 여정을 설계하고, CRM 연동으로 전환율과 리텐션을 높이세요.",
+        tags: ["옴니채널 여정 관리", "행동 기반 자동화", "전환율 최적화"] },
+      { name: "Chatbot", grad: "grad-violet", iconBg: "icon-violet", icon: "bot",
+        title: "맥락을 이해하는 대화",
+        desc: "FAQ 자동화부터 리드 수집까지. 24/7 양방향 고객 응대로 상담사 업무를 줄이고 고객 만족도를 높이세요.",
+        tags: ["맥락 기반 대화", "24/7 자동 응대", "상담사 부담 감소"] },
+      { name: "Inbox", grad: "grad-orange", iconBg: "icon-orange", icon: "inbox",
+        title: "통합 클라우드 컨택센터",
+        desc: "모든 상담 채널을 하나의 인박스로. 컨택센터를 현대화하고 채널 간 연속된 상담 경험을 제공하세요.",
+        tags: ["통합 상담 환경", "고객 이력 관리", "옴니채널 상담"] },
+    ];
+
+    const FEATURES = [
+      { icon: "zap",     title: "빠른 구축",       desc: "수개월이 아닌 수주 만에 운영을 시작하세요" },
+      { icon: "shield",  title: "엔터프라이즈 보안", desc: "금융·공공기관 수준의 보안 인프라" },
+      { icon: "globe",   title: "글로벌 커버리지",   desc: "190개국 이상의 통신 네트워크 지원" },
+      { icon: "bar",     title: "실시간 분석",       desc: "메시지 성과를 실시간으로 추적하고 최적화" },
+      { icon: "layers",  title: "유연한 API",        desc: "기존 시스템과 손쉽게 연동하는 확장 구조" },
+      { icon: "clock",   title: "24/7 운영",         desc: "상시 가동으로 고객에게 끊김 없는 경험 제공" },
+    ];
+
+    // ── ICONS ──
+    const ICONS = {
+      msg:   `<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+      hash:  `<svg viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>`,
+      phone: `<svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.39 19a19.5 19.5 0 0 1-5.5-5.5A19.79 19.79 0 0 1 2.1 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 5.5 5.5l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>`,
+      video: `<svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>`,
+      send:  `<svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`,
+      route: `<svg viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>`,
+      bot:   `<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>`,
+      inbox: `<svg viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>`,
+      zap:   `<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+      shield:`<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+      globe: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+      bar:   `<svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
+      layers:`<svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+      clock: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+    };
+
+    // ── RENDER CHANNELS ──
+    const cGrid = document.getElementById('channelsGrid');
+    CHANNELS.forEach((ch, i) => {
+      const el = document.createElement('div');
+      el.className = 'channel-card';
+      el.style.animationDelay = (i * 0.05) + 's';
+      el.innerHTML = `
+        <div class="ch-icon ${ch.color}">${ICONS[ch.icon]}</div>
+        <span>${ch.name}</span>`;
+      cGrid.appendChild(el);
+    });
+
+    // ── RENDER PRODUCTS ──
+    const pGrid = document.getElementById('productsGrid');
+    PRODUCTS.forEach((p, i) => {
+      const el = document.createElement('div');
+      el.className = `product-card ${p.grad}`;
+      el.style.animationDelay = (i * 0.1) + 's';
+      el.innerHTML = `
+        <div class="product-card-inner">
+          <div class="prod-icon ${p.iconBg}">${ICONS[p.icon]}</div>
+          <div>
+            <span class="prod-name">${p.name}</span>
+            <div class="prod-title">${p.title}</div>
+            <p class="prod-desc">${p.desc}</p>
+            <div class="prod-tags">${p.tags.map(t => `<span class="prod-tag">${t}</span>`).join('')}</div>
+          </div>
+        </div>`;
+      pGrid.appendChild(el);
+    });
+
+    // ── RENDER FEATURES ──
+    const fGrid = document.getElementById('featuresGrid');
+    FEATURES.forEach((f, i) => {
+      const el = document.createElement('div');
+      el.className = 'feature-item';
+      el.style.animationDelay = (i * 0.08) + 's';
+      el.innerHTML = `
+        <div class="feat-icon">${ICONS[f.icon]}</div>
+        <div>
+          <div class="feat-title">${f.title}</div>
+          <p class="feat-desc">${f.desc}</p>
+        </div>`;
+      fGrid.appendChild(el);
+    });
+
+    // ── MOBILE NAV ──
+    function toggleMobile() {
+      const nav = document.getElementById('mobileNav');
+      const menu = document.getElementById('icon-menu');
+      const close = document.getElementById('icon-close');
+      const open = nav.classList.toggle('open');
+      menu.style.display  = open ? 'none'  : '';
+      close.style.display = open ? ''      : 'none';
+    }
+    function closeMobile() {
+      document.getElementById('mobileNav').classList.remove('open');
+      document.getElementById('icon-menu').style.display  = '';
+      document.getElementById('icon-close').style.display = 'none';
+    }
+
+    document.querySelectorAll('.channel-card, .product-card, .feature-item').forEach(el => {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
