@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>무신사 × WhatsApp — 방한 외국인 K-패션 전략 제안서 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --black: #0A0A0A;
+    --dark: #1A1A1A;
+    --orange: #FF5200;
+    --orange-light: #FF6B35;
+    --gray: #888;
+    --light-gray: #F5F5F5;
+    --mid-gray: #E8E8E8;
+    --white: #FFFFFF;
+    --green: #22C55E;
+    --blue: #3B82F6;
+    --wa-green: #25D366;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+    background: #F0F0F0;
+    color: var(--dark);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .page {
+    width: 1000px;
+    margin: 30px auto;
+    background: white;
+    border-radius: 16px;
+    overflow: visible;
+    box-shadow: 0 4px 40px rgba(0,0,0,.12);
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--black);
+    padding: 80px 70px;
+    position: relative;
+    overflow: hidden;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,82,0,.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 30%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(37,211,102,.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cover-top { position: relative; z-index: 2; }
+  .cover-logos {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 50px;
+  }
+  .logo-musinsa {
+    background: white;
+    color: var(--black);
+    font-size: 20px;
+    font-weight: 900;
+    padding: 8px 18px;
+    border-radius: 8px;
+    letter-spacing: -0.5px;
+  }
+  .logo-x {
+    color: var(--gray);
+    font-size: 24px;
+    font-weight: 300;
+  }
+  .logo-wa {
+    width: 48px; height: 48px;
+    background: var(--wa-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+  }
+  .cover-title {
+    color: white;
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .cover-title span { color: var(--orange); }
+  .cover-sub {
+    color: rgba(255,255,255,.55);
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 40px;
+  }
+  .cover-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .cover-tag {
+    border: 1px solid rgba(255,255,255,.2);
+    color: rgba(255,255,255,.7);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+  }
+  .cover-bottom {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding-top: 24px;
+    margin-top: 40px;
+  }
+  .cover-meta { color: rgba(255,255,255,.4); font-size: 12px; }
+  .cover-meta strong { color: rgba(255,255,255,.7); display: block; }
+
+  /* ── SECTIONS ── */
+  .section { padding: 60px 70px; border-bottom: 1px solid var(--mid-gray); }
+  .section:last-child { border-bottom: none; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--black);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .section-desc {
+    color: var(--gray);
+    font-size: 14px;
+    margin-bottom: 36px;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  /* ── STAT CARDS ── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--light-gray);
+    border-radius: 12px;
+    padding: 22px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-card.accent {
+    background: var(--black);
+    color: white;
+  }
+  .stat-card.wa {
+    background: var(--wa-green);
+    color: white;
+  }
+  .stat-card.orange {
+    background: var(--orange);
+    color: white;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-card.accent .stat-num,
+  .stat-card.wa .stat-num,
+  .stat-card.orange .stat-num { color: white; }
+  .stat-label {
+    font-size: 11px;
+    color: var(--gray);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .stat-card.accent .stat-label,
+  .stat-card.wa .stat-label,
+  .stat-card.orange .stat-label { color: rgba(255,255,255,.75); }
+  .stat-badge {
+    position: absolute;
+    top: 12px; right: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    background: rgba(255,255,255,.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* ── WHY WA TABLE ── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .compare-table th {
+    background: var(--black);
+    color: white;
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+  }
+  .compare-table th:first-child { border-radius: 0; }
+  .compare-table td {
+    padding: 14px 20px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--mid-gray);
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:nth-child(even) td { background: var(--light-gray); }
+  .wa-val { color: var(--wa-green); font-weight: 800; }
+  .dim-val { color: var(--gray); }
+
+  /* ── FUNNEL ── */
+  .funnel-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid var(--mid-gray);
+  }
+  .funnel-col {
+    padding: 28px 24px;
+    position: relative;
+  }
+  .funnel-col:not(:last-child) {
+    border-right: 2px solid var(--mid-gray);
+  }
+  .funnel-col.phase1 { background: #FFF8F5; }
+  .funnel-col.phase2 { background: #F0FFF4; }
+  .funnel-col.phase3 { background: #F0F8FF; }
+  .funnel-phase {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .phase1 .funnel-phase { color: var(--orange); }
+  .phase2 .funnel-phase { color: var(--wa-green); }
+  .phase3 .funnel-phase { color: var(--blue); }
+  .funnel-heading {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color: var(--black);
+  }
+  .funnel-sub {
+    font-size: 11px;
+    color: var(--gray);
+    margin-bottom: 20px;
+  }
+  .funnel-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #333;
+  }
+  .funnel-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    margin-top: 1px;
+  }
+  .phase1 .funnel-dot { background: var(--orange); color: white; }
+  .phase2 .funnel-dot { background: var(--wa-green); color: white; }
+  .phase3 .funnel-dot { background: var(--blue); color: white; }
+
+  /* ── AD CHANNELS ── */
+  .ad-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .ad-card {
+    border: 1.5px solid var(--mid-gray);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color .2s;
+  }
+  .ad-card:hover { border-color: var(--orange); }
+  .ad-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+  .ad-icon.fb { background: linear-gradient(135deg, #1877F2, #0A5CC7); }
+  .ad-icon.ig { background: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF); }
+  .ad-icon.tt { background: #010101; }
+  .ad-title { font-size: 14px; font-weight: 800; margin-bottom: 8px; }
+  .ad-type {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .ad-target { font-size: 12px; color: var(--gray); line-height: 1.6; }
+  .ad-target strong { color: var(--dark); font-weight: 600; }
+
+  /* ── CHATBOT FLOW ── */
+  .flow-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .flow-step {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0;
+    border: 1.5px solid var(--mid-gray);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .flow-step-label {
+    background: var(--black);
+    color: white;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .flow-step-num {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--orange);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .flow-step-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,.8);
+    letter-spacing: 0.5px;
+  }
+  .flow-step-content {
+    padding: 16px 20px;
+    background: white;
+  }
+  .flow-q {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .flow-msg {
+    background: var(--light-gray);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #333;
+    line-height: 1.6;
+    font-family: 'Inter', monospace;
+    margin-bottom: 6px;
+  }
+  .flow-msg.wa {
+    background: #DCF8C6;
+    border-radius: 10px 10px 10px 2px;
+  }
+  .flow-choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .flow-choice {
+    background: white;
+    border: 1px solid var(--mid-gray);
+    border-radius: 16px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: var(--dark);
+  }
+
+  /* ── TRIGGER BOX ── */
+  .trigger-box {
+    background: var(--black);
+    border-radius: 16px;
+    padding: 32px;
+    color: white;
+    margin-bottom: 24px;
+  }
+  .trigger-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .trigger-icon {
+    width: 40px; height: 40px;
+    background: var(--orange);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .trigger-title { font-size: 16px; font-weight: 800; }
+  .trigger-desc { font-size: 12px; color: rgba(255,255,255,.5); }
+  .trigger-msgs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .trigger-msg {
+    background: rgba(255,255,255,.07);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: rgba(255,255,255,.85);
+  }
+  .trigger-msg strong { color: white; }
+  .trigger-timing {
+    font-size: 10px;
+    color: rgba(255,255,255,.35);
+    margin-bottom: 4px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── QR SECTION ── */
+  .qr-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .qr-card {
+    border: 1.5px solid var(--mid-gray);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .qr-card-header {
+    background: var(--light-gray);
+    padding: 14px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--mid-gray);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .qr-card-body { padding: 16px 20px; font-size: 12px; color: #444; line-height: 1.7; }
+  .qr-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .qr-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .qr-arrow {
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  /* ── POST-VISIT ── */
+  .sequence-wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .seq-card {
+    border-radius: 12px;
+    padding: 20px 16px;
+    position: relative;
+  }
+  .seq-card::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .seq-card:last-child::after { display: none; }
+  .seq-day {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .seq-title { font-size: 13px; font-weight: 800; margin-bottom: 6px; }
+  .seq-body { font-size: 11px; color: var(--gray); line-height: 1.5; }
+  .seq-card.s1 { background: #FFF8F5; }
+  .seq-card.s1 .seq-day { color: var(--orange); }
+  .seq-card.s2 { background: #F5F8FF; }
+  .seq-card.s2 .seq-day { color: var(--blue); }
+  .seq-card.s3 { background: #F5FFF8; }
+  .seq-card.s3 .seq-day { color: var(--green); }
+  .seq-card.s4 { background: var(--black); }
+  .seq-card.s4 .seq-day { color: var(--orange); }
+  .seq-card.s4 .seq-title { color: white; }
+  .seq-card.s4 .seq-body { color: rgba(255,255,255,.5); }
+
+  /* ── KPI ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .kpi-card {
+    border-radius: 14px;
+    padding: 24px 20px;
+    border: 1.5px solid var(--mid-gray);
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--orange);
+    border-radius: 0;
+  }
+  .kpi-card.green::before { background: var(--wa-green); }
+  .kpi-card.blue::before { background: var(--blue); }
+  .kpi-phase {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+  .kpi-card.green .kpi-phase { color: var(--wa-green); }
+  .kpi-card.blue .kpi-phase { color: var(--blue); }
+  .kpi-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--mid-gray);
+    font-size: 12px;
+  }
+  .kpi-item:last-child { border-bottom: none; }
+  .kpi-metric { color: #444; }
+  .kpi-val { font-weight: 800; color: var(--black); }
+
+  /* ── NEXT STEPS ── */
+  .next-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .next-card {
+    background: var(--light-gray);
+    border-radius: 14px;
+    padding: 24px 20px;
+  }
+  .next-num {
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--mid-gray);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .next-title { font-size: 14px; font-weight: 800; margin-bottom: 8px; }
+  .next-body { font-size: 12px; color: var(--gray); line-height: 1.6; }
+  .next-timeline {
+    margin-top: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--orange);
+  }
+
+  /* ── COUPON BOX ── */
+  .coupon-box {
+    border: 2px dashed var(--orange);
+    border-radius: 14px;
+    padding: 20px 24px;
+    background: #FFF8F5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  .coupon-left { }
+  .coupon-label { font-size: 10px; font-weight: 700; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+  .coupon-code { font-size: 24px; font-weight: 900; color: var(--black); letter-spacing: 1px; }
+  .coupon-desc { font-size: 12px; color: var(--gray); margin-top: 4px; }
+  .coupon-right { text-align: right; }
+  .coupon-pct { font-size: 48px; font-weight: 900; color: var(--orange); line-height: 1; }
+  .coupon-off { font-size: 14px; font-weight: 700; color: var(--orange); }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--mid-gray); margin: 0 70px; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--black);
+    padding: 32px 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-left { color: rgba(255,255,255,.4); font-size: 12px; }
+  .footer-left strong { color: white; display: block; font-size: 14px; margin-bottom: 2px; }
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .footer-tag {
+    border: 1px solid rgba(255,255,255,.15);
+    color: rgba(255,255,255,.5);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+  }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight {
+    background: var(--black);
+    color: white;
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin: 24px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .highlight-icon { font-size: 32px; flex-shrink: 0; }
+  .highlight-text { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,.85); }
+  .highlight-text strong { color: white; }
+
+  /* ── PILL BADGES ── */
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .pill {
+    border: 1px solid var(--mid-gray);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px;
+    color: #555;
+  }
+  .pill.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: white;
+    font-weight: 700;
+  }
+
+  /* ── DAY SCHEDULE ── */
+  .day-schedule {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0;
+    border: 1.5px solid var(--mid-gray);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .day-row {
+    display: contents;
+  }
+  .day-label {
+    background: var(--black);
+    color: var(--orange);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 14px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .day-content {
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--mid-gray);
+    font-size: 12px;
+    color: #333;
+    line-height: 1.6;
+  }
+  .day-row:last-child .day-label,
+  .day-row:last-child .day-content { border-bottom: none; }
+  .day-tag {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .day-tag.green { background: var(--wa-green); }
+  .day-tag.blue { background: var(--blue); }
+
+  @media print {
+    .page { margin: 0; box-shadow: none; border-radius: 0; }
+    body { background: white; }
+  }
+
+/* WhatsApp Chatbot Phone */
+.ph-wrap{display:grid;grid-template-columns:272px 1fr;gap:32px;align-items:start}
+.ph-col{position:sticky;top:20px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.ph-device{width:256px;background:#1c1c1e;border-radius:40px;padding:11px;
+  box-shadow:0 22px 60px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.09);position:relative}
+.ph-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:88px;height:22px;background:#1c1c1e;border-radius:0 0 14px 14px;z-index:6}
+.ph-screen{background:#ece5dd;border-radius:28px;overflow:hidden;height:500px;display:flex;flex-direction:column}
+.ph-hd{background:#075e54;padding:34px 10px 9px;display:flex;align-items:center;gap:7px;flex-shrink:0}
+.ph-av{width:30px;height:30px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.ph-nm{font-size:11px;font-weight:700;color:#fff}
+.ph-st{font-size:9px;color:rgba(255,255,255,.65)}
+.ph-body{flex:1;overflow-y:auto;overflow-x:hidden;padding:7px 8px;display:flex;flex-direction:column;gap:5px;scroll-behavior:smooth}
+.ph-body::-webkit-scrollbar{width:2px}
+.ph-datechip{font-size:9px;color:#555;background:rgba(255,255,255,.6);padding:2px 8px;border-radius:6px;align-self:center;flex-shrink:0;margin:2px 0}
+@keyframes phIn{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:translateY(0)}}
+.ph-b{max-width:82%;padding:6px 9px 3px;font-size:10px;line-height:1.47;flex-shrink:0;word-break:break-word;animation:phIn .3s ease both}
+.ph-b.bot{background:#fff;color:#1a1a1a;border-radius:2px 9px 9px 9px;align-self:flex-start;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.ph-b.usr{background:#dcf8c6;color:#1a1a1a;border-radius:9px 2px 9px 9px;align-self:flex-end}
+.ph-ts{font-size:8px;color:#bbb;text-align:right;margin-top:2px}
+.ph-b.usr .ph-ts{color:#6eb257}
+.ph-typing{background:#fff;border-radius:2px 9px 9px 9px;padding:8px 12px;align-self:flex-start;display:flex;gap:3px;align-items:center;box-shadow:0 1px 2px rgba(0,0,0,.08);flex-shrink:0;animation:phIn .2s ease both}
+.ph-dot{width:6px;height:6px;background:#ccc;border-radius:50%;animation:phBounce 1s infinite}
+.ph-dot:nth-child(2){animation-delay:.17s} .ph-dot:nth-child(3){animation-delay:.34s}
+@keyframes phBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.ph-qrow{align-self:flex-start;display:flex;flex-direction:column;gap:3px;max-width:83%;flex-shrink:0;animation:phIn .3s ease both}
+.ph-qbtn{background:#fff;border:1.5px solid #128c7e;color:#128c7e;border-radius:14px;padding:4px 9px;font-size:9.5px;font-weight:600;text-align:center}
+.ph-qbtn.sel{background:#128c7e;color:#fff}
+.ph-cpn{background:linear-gradient(135deg,#ff5200,#ff7a45);border-radius:8px;padding:9px 10px;margin:2px 0;color:#fff}
+.ph-cpn-hd{font-size:7.5px;font-weight:700;opacity:.8;letter-spacing:.7px;margin-bottom:3px}
+.ph-cpn-row{display:flex;justify-content:space-between;align-items:center}
+.ph-cpn-code{font-size:13px;font-weight:900;letter-spacing:1px}
+.ph-cpn-sub{font-size:7.5px;opacity:.75;margin-top:1px}
+.ph-cpn-pct{font-size:22px;font-weight:900;line-height:1;text-align:right}
+.ph-prod{background:#fff;border-radius:8px;overflow:hidden;margin:2px 0}
+.ph-prod-img{height:48px;background:linear-gradient(135deg,#222,#444);display:flex;align-items:center;justify-content:center;font-size:22px}
+.ph-prod-info{padding:5px 8px}
+.ph-prod-nm{font-size:9.5px;font-weight:700;color:#222}
+.ph-prod-sub{font-size:8px;color:#888;margin-top:1px}
+.ph-prod-bd{display:inline-block;background:#ff3b30;color:#fff;font-size:8px;font-weight:700;padding:1px 5px;border-radius:3px;margin-top:2px}
+.ph-foot{background:#f0f0f0;padding:5px 8px;display:flex;align-items:center;gap:5px;flex-shrink:0}
+.ph-inp{flex:1;background:#fff;border-radius:15px;padding:5px 10px;font-size:9.5px;color:#bbb}
+.ph-send{width:26px;height:26px;background:#128c7e;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px}
+.ph-overlay{position:absolute;inset:0;border-radius:28px;background:rgba(0,0,0,.52);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  z-index:20;cursor:pointer;transition:opacity .3s}
+.ph-overlay.off{opacity:0;pointer-events:none}
+.ph-playbtn{width:54px;height:54px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;box-shadow:0 4px 20px rgba(37,211,102,.5)}
+.ph-playlbl{color:#fff;font-size:12px;font-weight:700;text-align:center;line-height:1.4}
+.ph-rp{background:#f5f5f5;border:1px solid #e0e0e0;border-radius:16px;padding:7px 14px;font-size:11px;color:#888;cursor:pointer;font-family:inherit;transition:all .2s;display:none}
+.ph-rp:hover{background:#ff5200;color:#fff;border-color:#ff5200}
+
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-top">
+      <div class="cover-logos">
+        <div class="logo-musinsa">MUSINSA</div>
+        <div class="logo-x">×</div>
+        <div class="logo-wa">💬</div>
+      </div>
+      <div class="cover-title">
+        방한 외국인 K-패션<br>
+        <span>WhatsApp 마케팅 전략</span>
+      </div>
+      <div class="cover-sub">
+        2,000만 방한 외국인 시대 — FB/Instagram/TikTok에서 시작해 오프라인 매장까지 연결하는 Full Funnel 전략
+      </div>
+      <div class="cover-tags">
+        <span class="cover-tag">2026 Strategy</span>
+        <span class="cover-tag">WhatsApp Business API</span>
+        <span class="cover-tag">Inbound Commerce</span>
+        <span class="cover-tag">K-Fashion</span>
+        <span class="cover-tag">Pre·During·Post Visit</span>
+      </div>
+    </div>
+    <div class="cover-bottom">
+      <div class="cover-meta">
+        <strong>Presented by Infobip Korea</strong>
+        APAC KJ Squad · 2026
+      </div>
+      <div class="cover-meta" style="text-align:right">
+        <strong>대상: 무신사 마케팅팀</strong>
+        Growth Marketer (외국인 타겟) 협업 제안
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: WHY NOW -->
+  <div class="section">
+    <div class="section-label">Market Opportunity</div>
+    <div class="section-title">지금이 타이밍인 이유</div>
+    <div class="section-desc">2026년 방한 외국인은 역대 최고치를 기록 중입니다. 이들은 이미 WhatsApp을 켜고 입국합니다.</div>
+
+    <div class="stat-grid">
+      <div class="stat-card orange">
+        <div class="stat-badge">2026 전망</div>
+        <div class="stat-num">2,036<span style="font-size:16px">만</span></div>
+        <div class="stat-label">방한 외국인 (역대 최고)</div>
+      </div>
+      <div class="stat-card accent">
+        <div class="stat-badge">Q1 2026</div>
+        <div class="stat-num">476<span style="font-size:16px">만</span></div>
+        <div class="stat-label">1분기 입국자 +23% YoY<br>분기 사상 최고</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--dark)">1.15<span style="font-size:16px">조</span></div>
+        <div class="stat-label" style="color:var(--gray)">4월 서울 외국인 카드지출<br>전년 대비 +23%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--dark)">74<span style="font-size:16px">%</span></div>
+        <div class="stat-label" style="color:var(--gray)">방한 MZ 외국인 중<br>K-패션 구매 의향</div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card wa">
+        <div class="stat-num">98<span style="font-size:16px">%</span></div>
+        <div class="stat-label">WhatsApp 메시지 오픈율<br>(이메일 20% 대비)</div>
+      </div>
+      <div class="stat-card wa">
+        <div class="stat-num">45~60<span style="font-size:16px">%</span></div>
+        <div class="stat-label">WhatsApp 클릭률<br>(이메일 3% 대비 15배)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--dark)">70<span style="font-size:16px">%+</span></div>
+        <div class="stat-label" style="color:var(--gray)">동남아·중동·유럽 방문객<br>WhatsApp 사용률</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--dark)">30<span style="font-size:16px">억</span></div>
+        <div class="stat-label" style="color:var(--gray)">WhatsApp 전 세계 월간 활성 유저<br>180개국 1위 메신저</div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <div class="highlight-icon">💡</div>
+      <div class="highlight-text">
+        <strong>카카오톡은 한국인의 채널, WhatsApp은 전 세계 외국인이 이미 켜놓은 채널입니다.</strong><br>
+        무신사 홍대·성수 매장은 이미 외국인 관광 필수 코스에 위치해 있습니다. WhatsApp을 연결하면 — 비행기 타기 전부터 무신사를 찾아오는 고객 여정이 만들어집니다.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: STRATEGY OVERVIEW -->
+  <div class="section">
+    <div class="section-label">Strategy Framework</div>
+    <div class="section-title">3단계 WhatsApp Full Funnel</div>
+    <div class="section-desc">출발국 광고부터 귀국 후 재방한까지, WhatsApp 하나로 연결되는 고객 여정입니다.</div>
+
+    <div class="funnel-wrap">
+      <div class="funnel-col phase1">
+        <div class="funnel-phase">Phase 1 · 한국 오기 전</div>
+        <div class="funnel-heading">PRE-ARRIVAL</div>
+        <div class="funnel-sub">인지 → 구독 → 쿠폰 선발급</div>
+        <div class="funnel-item">
+          <div class="funnel-dot">1</div>
+          <div>FB/Instagram/TikTok 광고로 유입</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-dot">2</div>
+          <div>WhatsApp 챗봇으로 방문일정·숙소지역·스타일 수집</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-dot">3</div>
+          <div>무신사 회원가입 유도</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-dot">4</div>
+          <div>웰컴 쿠폰 즉시 발송 + 출발 3일 전 매장 안내</div>
+        </div>
+      </div>
+      <div class="funnel-col phase2">
+        <div class="funnel-phase">Phase 2 · 한국 체류 중</div>
+        <div class="funnel-heading">ON-GROUND</div>
+        <div class="funnel-sub">유도 → 방문 → 구매전환</div>
+        <div class="funnel-item">
+          <div class="funnel-dot">1</div>
+          <div>방문일 기준 도착 트리거 자동 발송</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-dot">2</div>
+          <div>핫 아이템 + 쿠폰 활성화 안내</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-dot">3</div>
+          <div>체류 기간 일별 맞춤 메시지</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-dot">4</div>
+          <div>현장 QR → 신규 가입 → 즉시 쿠폰</div>
+        </div>
+      </div>
+      <div class="funnel-col phase3">
+        <div class="funnel-phase">Phase 3 · 귀국 후</div>
+        <div class="funnel-heading">POST-VISIT</div>
+        <div class="funnel-sub">재구매 → 재방한 → 바이럴</div>
+        <div class="funnel-item">
+          <div class="funnel-dot">1</div>
+          <div>귀국 감지 → 자동 시퀀스 시작</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-dot">2</div>
+          <div>온라인 배송 제안 + 쿠폰 만료 알림</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-dot">3</div>
+          <div>재방한 서베이 (D+14)</div>
+        </div>
+        <div class="funnel-item">
+          <div class="funnel-dot">4</div>
+          <div>지인 추천 바이럴 루프</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: PHASE 1 -->
+  <div class="section">
+    <div class="section-label">Phase 1 — Pre-Arrival</div>
+    <div class="section-title">한국 오기 전, 출발국에서 먼저 잡는다</div>
+    <div class="section-desc">광고 클릭 한 번으로 WhatsApp 연결 — 챗봇이 방문 일정·숙소·스타일을 수집하고 쿠폰을 선발급합니다.</div>
+
+    <!-- Ad Channels -->
+    <div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:14px;">① 광고 채널 — FB / Instagram / TikTok</div>
+    <div class="ad-grid" style="margin-bottom:32px;">
+      <div class="ad-card">
+        <div class="ad-icon fb">📘</div>
+        <div class="ad-title">Facebook</div>
+        <div class="ad-type">Click-to-WhatsApp</div>
+        <div class="ad-target">
+          <strong>타겟:</strong> 한국 여행 관심사, K-fashion 팔로워, 방한 계획 행동 데이터<br><br>
+          <strong>소재:</strong> 무신사 입점 브랜드 룩북<br>
+          <strong>CTA:</strong> "Get your Seoul K-Fashion Guide on WhatsApp"
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-icon ig">📷</div>
+        <div class="ad-title">Instagram</div>
+        <div class="ad-type">Click-to-WhatsApp</div>
+        <div class="ad-target">
+          <strong>타겟:</strong> #kfashion #seoulstyle #koreanshopping 고관여층, Lookalike (무신사 글로벌 고객)<br><br>
+          <strong>소재:</strong> 리얼 스트리트패션 비주얼<br>
+          <strong>CTA:</strong> "Shop Korea's hottest brands →"
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-icon tt">🎵</div>
+        <div class="ad-title">TikTok</div>
+        <div class="ad-type">Lead Gen → WhatsApp</div>
+        <div class="ad-target">
+          <strong>포맷:</strong> In-Feed Video, Spark Ads<br>
+          <strong>콘텐츠:</strong> "서울 패션 성지 TOP 5" 스타일 영상<br><br>
+          <strong>CTA:</strong> "Get FREE Seoul fashion guide on WhatsApp" (영상 마지막 5초)
+        </div>
+      </div>
+    </div>
+
+    <!-- Chatbot Flow -->
+    <div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:16px;">② WhatsApp 챗봇 — 정보 수집 플로우 (자동화)</div>
+    <div class="ph-wrap">
+      <div class="ph-col">
+        <div class="ph-device">
+          <div class="ph-notch"></div>
+          <div class="ph-overlay" id="p1Ov" onclick="phStart('p1')">
+            <div class="ph-playbtn">&#9654;</div>
+            <div class="ph-playlbl">클릭하여<br>챗봇 시작</div>
+          </div>
+          <div class="ph-screen">
+            <div class="ph-hd">
+              <span style="color:rgba(255,255,255,.8);font-size:15px">&#8249;</span>
+              <div class="ph-av">&#128231;</div>
+              <div style="flex:1"><div class="ph-nm">MUSINSA Official</div><div class="ph-st">&#9679; online</div></div>
+              <span style="color:rgba(255,255,255,.6);font-size:13px">&#8942;</span>
+            </div>
+            <div class="ph-body" id="p1Body">
+              <div class="ph-datechip">Today</div>
+            </div>
+            <div class="ph-foot">
+              <div class="ph-inp">Message</div>
+              <div class="ph-send">&#10148;</div>
+            </div>
+          </div>
+        </div>
+        <button class="ph-rp" id="p1Rp" onclick="phReplay('p1')">&#8635; 다시 보기</button>
+      </div>
+      <div class="flow-wrap">
+        <div class="flow-step"><div class="flow-step-label"><div class="flow-step-num">01</div><div class="flow-step-name">웰컴<br>WELCOME</div></div><div class="flow-step-content"><div class="flow-q">광고 클릭 → WhatsApp 자동 연결</div><div class="flow-msg wa">👗 Hey! Welcome to MUSINSA. Korea's #1 K-fashion platform!<br>✅ Store info near YOUR hotel · ✅ Hottest drops · ✅ Exclusive coupon<br>Reply YES 👇</div></div></div>
+        <div class="flow-step"><div class="flow-step-label"><div class="flow-step-num">02</div><div class="flow-step-name">방문 일정<br>VISIT DATE</div></div><div class="flow-step-content"><div class="flow-q">📅 방문 일정 수집 — Phase 2 트리거 기준</div><div class="flow-msg wa">"When are you arriving in Korea? (e.g. July 10, 2026)"</div><div style="font-size:11px;color:var(--gray);margin-top:6px;">→ 수집된 날짜 기준으로 도착 당일 자동 트리거 발송</div></div></div>
+        <div class="flow-step"><div class="flow-step-label"><div class="flow-step-num">03</div><div class="flow-step-name">숙박 지역<br>LOCATION</div></div><div class="flow-step-content"><div class="flow-q">📍 숙박 지역 수집 — 맞춤 매장 안내 기준</div><div class="flow-choices"><span class="flow-choice">1️⃣ 홍대/Hongdae ⭐</span><span class="flow-choice">2️⃣ 성수/Seongsu ⭐</span><span class="flow-choice">3️⃣ 명동</span><span class="flow-choice">4️⃣ 강남</span></div><div style="font-size:11px;color:var(--gray);margin-top:6px;">⭐ 무신사 스탠다드 직영점 — 자동 강조</div></div></div>
+        <div class="flow-step"><div class="flow-step-label"><div class="flow-step-num">04</div><div class="flow-step-name">스타일<br>STYLE</div></div><div class="flow-step-content"><div class="flow-q">🧢 스타일 취향 수집 — 브랜드 추천 개인화</div><div class="flow-choices"><span class="flow-choice">1️⃣ Streetwear</span><span class="flow-choice">2️⃣ Minimal</span><span class="flow-choice">3️⃣ K-pop</span><span class="flow-choice">4️⃣ All</span></div></div></div>
+        <div class="flow-step"><div class="flow-step-label"><div class="flow-step-num">05</div><div class="flow-step-name">회원가입<br>SIGNUP</div></div><div class="flow-step-content"><div class="flow-q">🎁 무신사 회원가입 → 쿠폰 즉시 발급</div><div class="flow-msg wa">"Create your free MUSINSA account → 30 seconds → coupon drops instantly! 🎁"</div></div></div>
+      </div>
+    </div>
+    <div style="font-size:13px;font-weight:700;color:var(--black);margin:28px 0 8px;">③ 회원가입 완료 → 쿠폰 즉시 자동 발송</div>
+    <div class="coupon-box">
+      <div class="coupon-left">
+        <div class="coupon-label">🎁 Welcome Coupon · MUSINSA</div>
+        <div class="coupon-code">MU-WA-2026</div>
+        <div class="coupon-desc">무신사 스탠다드 전 매장 사용 가능 · 방문 기간 내 유효<br>가입 즉시 WhatsApp으로 자동 발송</div>
+      </div>
+      <div class="coupon-right">
+        <div class="coupon-pct">15%</div>
+        <div class="coupon-off">OFF</div>
+      </div>
+    </div>
+
+    <!-- D-3 reminder -->
+    <div style="margin-top:20px;">
+      <div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:10px;">④ 출발 3일 전 — 자동 리마인더 발송</div>
+      <div class="flow-msg" style="background:#FFF8F5;border-left:3px solid var(--orange);border-radius:0 10px 10px 0;padding:14px 18px;">
+        ✈️ <strong>Seoul in 3 days!</strong><br><br>
+        📍 MUSINSA STANDARD Hongdae — 3 min walk from your hotel · Open 11AM–9PM · <span style="color:#0066cc">[지도 링크]</span><br><br>
+        🔥 <strong>This week's drops:</strong> [신상 브랜드명] 입고 완료 · [한정판 브랜드명] 재고 얼마 없어요<br><br>
+        🏷️ Your coupon: <strong>MU-WA-2026 (15% OFF)</strong> — Don't forget! See you in Seoul 🇰🇷
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: PHASE 2 -->
+  <div class="section">
+    <div class="section-label">Phase 2 — On-Ground</div>
+    <div class="section-title">한국 체류 중, WhatsApp으로 매장으로 이끈다</div>
+    <div class="section-desc">사전 수집한 방문 일정을 기준으로 도착 당일 자동 트리거가 발송됩니다. 현장 QR로 신규 외국인도 즉시 유입합니다.</div>
+
+    <!-- Trigger -->
+    <div class="ph-wrap" style="align-items:start"><div class="ph-col">
+        <div class="ph-device">
+          <div class="ph-notch"></div>
+          <div class="ph-overlay" id="p2Ov" onclick="phStart('p2')">
+            <div class="ph-playbtn">&#9654;</div>
+            <div class="ph-playlbl">클릭하여<br>챗봇 시작</div>
+          </div>
+          <div class="ph-screen">
+            <div class="ph-hd">
+              <span style="color:rgba(255,255,255,.8);font-size:15px">&#8249;</span>
+              <div class="ph-av">&#128231;</div>
+              <div style="flex:1"><div class="ph-nm">MUSINSA Official</div><div class="ph-st">&#9679; online</div></div>
+              <span style="color:rgba(255,255,255,.6);font-size:13px">&#8942;</span>
+            </div>
+            <div class="ph-body" id="p2Body">
+              <div class="ph-datechip">July 10 · Arrival Day</div>
+            </div>
+            <div class="ph-foot">
+              <div class="ph-inp">Message</div>
+              <div class="ph-send">&#10148;</div>
+            </div>
+          </div>
+        </div>
+        <button class="ph-rp" id="p2Rp" onclick="phReplay('p2')">&#8635; 다시 보기</button>
+      </div><div><div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:14px;">① 도착 트리거 — 방문 일정 기반 자동 발송</div>
+    <div class="trigger-box" style="margin-bottom:28px;">
+      <div class="trigger-header">
+        <div class="trigger-icon">🚀</div>
+        <div>
+          <div class="trigger-title">방문 당일 오전 10시 — 자동 메시지 발송</div>
+          <div class="trigger-desc">Phase 1에서 수집한 방문 날짜가 트리거 기준 · 별도 액션 불필요</div>
+        </div>
+      </div>
+      <div class="trigger-msgs">
+        <div class="trigger-msg">
+          <div class="trigger-timing">STEP 1 · 도착 확인</div>
+          <strong>"🇰🇷 TODAY IS THE DAY, [이름]! Are you in Seoul yet?"</strong><br>
+          1️⃣ 네, 도착했어요! &nbsp; 2️⃣ 오늘 오후에 도착해요 &nbsp; 3️⃣ 일정 변경됐어요
+        </div>
+        <div class="trigger-msg">
+          <div class="trigger-timing">STEP 2 · "도착" 선택 즉시 발송</div>
+          <strong>🔥 TODAY'S HOTTEST at Hongdae store:</strong><br>
+          1. [브랜드명] — 오늘 신상 입고 · "K-streetwear 필수템, 사이즈 빠르게 팔려요"<br>
+          2. [브랜드명] — 이번 주 한정 · "SNS에서 난리난 그 재킷"<br>
+          3. [브랜드명] — 외국인 최애 픽<br><br>
+          🏷️ <strong>Your coupon is NOW ACTIVE: MU-WA-2026 (15% OFF)</strong><br>
+          → Show this chat at checkout · 📍 MUSINSA STANDARD Hongdae <span style="color:rgba(255,255,255,.6)">[지도 링크]</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Daily Schedule -->
+    <div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:14px;">② 체류 기간 일별 메시지 스케줄</div>
+    <div class="day-schedule" style="margin-bottom:28px;">
+      <div class="day-row">
+        <div class="day-label">Day 1<br>도착일</div>
+        <div class="day-content"><span class="day-tag">핵심</span>핫 아이템 TOP 3 + 쿠폰 활성화 안내 + 숙소 근처 매장 지도 링크</div>
+      </div>
+      <div class="day-row">
+        <div class="day-label">Day 2<br>오전</div>
+        <div class="day-content"><span class="day-tag green">Flash</span>"어제 품절된 그 상품 — 재입고됐어요" + 오늘만 유효한 Flash Deal 알림</div>
+      </div>
+      <div class="day-row">
+        <div class="day-label">Day 3</div>
+        <div class="day-content"><span class="day-tag blue">Pick</span>"무신사 이 시즌 PICK — 이 브랜드 꼭 보고 가세요" + Tax-Free 쇼핑 가이드</div>
+      </div>
+      <div class="day-row">
+        <div class="day-label">마지막<br>날</div>
+        <div class="day-content"><span class="day-tag" style="background:#888">D-day</span>"오늘 마지막 날이에요! 쿠폰 자정 만료 ⏰ · 성수점도 가보셨나요? 홍대와 분위기 달라요"</div>
+      </div>
+    </div>
+
+    <!-- QR Section -->
+    </div></div>
+    <div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:14px;">③ 현장 QR — 미리 구독 안 한 외국인도 즉시 유입</div>
+    <div class="qr-grid">
+      <div class="qr-card">
+        <div class="qr-card-header">📍 QR 설치 위치</div>
+        <div class="qr-card-body">
+          <div style="margin-bottom:6px;">✅ 무신사 스탠다드 <strong>홍대점 · 성수점</strong> — 입구, 계산대, 피팅룸 앞</div>
+          <div style="margin-bottom:6px;">✅ 무신사 <strong>쇼핑백 내부 인쇄</strong></div>
+          <div style="margin-bottom:6px;">✅ <strong>팝업 이벤트 현장</strong> (명동·홍대·성수 주말)</div>
+          <div>✅ 소속 <strong>직원 명함</strong> QR 인쇄</div>
+        </div>
+      </div>
+      <div class="qr-card">
+        <div class="qr-card-header">📱 QR 스캔 후 챗봇 플로우</div>
+        <div class="qr-card-body">
+          <div class="qr-flow">
+            <div class="qr-step"><span class="qr-arrow">▶</span> QR 스캔 → WhatsApp 자동 오픈</div>
+            <div class="qr-step"><span class="qr-arrow">▶</span> "이름이 뭐예요?" 챗봇 시작</div>
+            <div class="qr-step"><span class="qr-arrow">▶</span> 무신사 회원가입 링크 제공</div>
+            <div class="qr-step"><span class="qr-arrow">▶</span> 가입 즉시 10% 당일 쿠폰 자동 발송</div>
+            <div class="qr-step"><span class="qr-arrow">▶</span> "지금 계산대에 보여주세요!" 안내</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="coupon-box" style="margin-top:16px;">
+      <div class="coupon-left">
+        <div class="coupon-label">🏪 현장 QR 전용 쿠폰</div>
+        <div class="coupon-code">STORE-[랜덤코드]</div>
+        <div class="coupon-desc">QR 스캔 후 회원가입 즉시 자동 발송 · 당일만 유효<br>계산대에 WhatsApp 화면 보여주면 즉시 적용</div>
+      </div>
+      <div class="coupon-right">
+        <div class="coupon-pct">10%</div>
+        <div class="coupon-off">TODAY ONLY</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: PHASE 3 -->
+  <div class="section">
+    <div class="section-label">Phase 3 — Post-Visit</div>
+    <div class="section-title">귀국 후, 재방문과 바이럴을 만든다</div>
+    <div class="section-desc">방문 일정 종료일 +1일부터 자동 시퀀스가 시작됩니다. 서베이 응답을 기반으로 맞춤 재방한 캠페인이 이어집니다.</div>
+
+    <div class="ph-wrap" style="align-items:start"><div class="ph-col">
+        <div class="ph-device">
+          <div class="ph-notch"></div>
+          <div class="ph-overlay" id="p3Ov" onclick="phStart('p3')">
+            <div class="ph-playbtn">&#9654;</div>
+            <div class="ph-playlbl">클릭하여<br>챗봇 시작</div>
+          </div>
+          <div class="ph-screen">
+            <div class="ph-hd">
+              <span style="color:rgba(255,255,255,.8);font-size:15px">&#8249;</span>
+              <div class="ph-av">&#128231;</div>
+              <div style="flex:1"><div class="ph-nm">MUSINSA Official</div><div class="ph-st">&#9679; online</div></div>
+              <span style="color:rgba(255,255,255,.6);font-size:13px">&#8942;</span>
+            </div>
+            <div class="ph-body" id="p3Body">
+              <div class="ph-datechip">July 14 · After return</div>
+            </div>
+            <div class="ph-foot">
+              <div class="ph-inp">Message</div>
+              <div class="ph-send">&#10148;</div>
+            </div>
+          </div>
+        </div>
+        <button class="ph-rp" id="p3Rp" onclick="phReplay('p3')">&#8635; 다시 보기</button>
+      </div><div><div class="sequence-wrap" style="margin-bottom:32px;">
+      <div class="seq-card s1">
+        <div class="seq-day">Day +1</div>
+        <div class="seq-title">귀국 확인</div>
+        <div class="seq-body">"Seoul 어떠셨나요? 무사히 도착하셨나요?" 확인 메시지 + 경험 별점 수집</div>
+      </div>
+      <div class="seq-card s2">
+        <div class="seq-day">Day +3</div>
+        <div class="seq-title">온라인 배송 제안</div>
+        <div class="seq-body">"못 사신 상품 있나요? 무신사 글로벌로 전 세계 배송" + 멤버 쿠폰 온라인 사용 안내</div>
+      </div>
+      <div class="seq-card s3">
+        <div class="seq-day">Day +7</div>
+        <div class="seq-title">쿠폰 만료 알림</div>
+        <div class="seq-body">"쿠폰 7일 후 만료 ⏰ 온라인에서 사용 가능" + 무신사 글로벌 링크</div>
+      </div>
+      <div class="seq-card s4">
+        <div class="seq-day">Day +14</div>
+        <div class="seq-title">재방한 서베이</div>
+        <div class="seq-body">다음 한국 방문 계획 수집 → 세그먼트 분류 → 맞춤 캠페인 자동 연결</div>
+      </div>
+    </div>
+
+    <div style="font-size:13px;font-weight:700;color:var(--black);margin-bottom:12px;">재방한 서베이 — 3문항 (Day+14 자동 발송)</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;">
+      <div style="background:var(--light-gray);border-radius:12px;padding:18px 16px;">
+        <div style="font-size:10px;font-weight:700;color:var(--orange);margin-bottom:8px;letter-spacing:1px;">Q1 · 경험 평가</div>
+        <div style="font-size:12px;color:#444;line-height:1.6;">무신사에서 구매하셨나요?<br><br>1️⃣ Yes! Loved it<br>2️⃣ Browsed but didn't buy<br>3️⃣ Didn't make it</div>
+      </div>
+      <div style="background:var(--light-gray);border-radius:12px;padding:18px 16px;">
+        <div style="font-size:10px;font-weight:700;color:var(--orange);margin-bottom:8px;letter-spacing:1px;">Q2 · 재방한 계획</div>
+        <div style="font-size:12px;color:#444;line-height:1.6;">다음 한국 방문 계획은?<br><br>1️⃣ 3개월 내<br>2️⃣ 6개월 내<br>3️⃣ 1년 내<br>4️⃣ 미정</div>
+      </div>
+      <div style="background:var(--light-gray);border-radius:12px;padding:18px 16px;">
+        <div style="font-size:10px;font-weight:700;color:var(--orange);margin-bottom:8px;letter-spacing:1px;">Q3 · 니즈 파악</div>
+        <div style="font-size:12px;color:#444;line-height:1.6;">다음엔 뭘 더 원하세요?<br><br>1️⃣ 더 큰 할인<br>2️⃣ 신상 드롭 알림<br>3️⃣ 무신사 단독 브랜드<br>4️⃣ 친구와 함께 혜택</div>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <div class="highlight-icon">🔁</div>
+      <div class="highlight-text">
+        <strong>"3개월 내" 응답 →</strong> 다음 시즌 신상 드롭 알림 자동 등록 + VIP 재방한 쿠폰 즉시 발송<br>
+        <strong>"미정" 응답 →</strong> 월 1회 "무신사 Pick — 이달의 K-패션 트렌드" 자동 발송 → 방한 욕구 지속 자극<br>
+        <strong>지인 추천 →</strong> "친구도 서울 가나요? 공유 시 친구 15% + 나 포인트 5,000원" 바이럴 루프
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: KPI -->
+  </div></div>
+    <div class="section">
+    <div class="section-label">Expected Results</div>
+    <div class="section-title">단계별 예상 성과 지표</div>
+    <div class="section-desc">WhatsApp Business API 글로벌 벤치마크 및 유사 인바운드 커머스 캠페인 기준입니다.</div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-phase">Phase 1 · Pre-Arrival</div>
+        <div class="kpi-item"><span class="kpi-metric">광고 클릭률 (CTR)</span><span class="kpi-val">3~6%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">WhatsApp 옵트인율</span><span class="kpi-val">15~25%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">챗봇 완료율</span><span class="kpi-val">60~75%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">회원가입 전환율</span><span class="kpi-val">35~50%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">메시지 오픈율</span><span class="kpi-val">98%</span></div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-phase">Phase 2 · On-Ground</div>
+        <div class="kpi-item"><span class="kpi-metric">도착 트리거 반응율</span><span class="kpi-val">55~70%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">매장 방문 전환율</span><span class="kpi-val">25~40%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">쿠폰 사용률</span><span class="kpi-val">40~60%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">현장 QR 가입률</span><span class="kpi-val">8~15%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">평균 구매 전환</span><span class="kpi-val">20~35%</span></div>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-phase">Phase 3 · Post-Visit</div>
+        <div class="kpi-item"><span class="kpi-metric">귀국 후 응답률</span><span class="kpi-val">40~55%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">온라인 재구매율</span><span class="kpi-val">12~18%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">서베이 응답률</span><span class="kpi-val">30~45%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">지인 추천 바이럴율</span><span class="kpi-val">8~15%</span></div>
+        <div class="kpi-item"><span class="kpi-metric">재방한 예약 의향</span><span class="kpi-val">25~35%</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;background:var(--light-gray);border-radius:12px;padding:20px 24px;">
+      <div style="font-size:12px;color:var(--gray);line-height:1.8;">
+        📊 <strong style="color:var(--dark)">WhatsApp vs 타 채널 비교:</strong>
+        &nbsp;|&nbsp; 이메일 오픈율 20% → WhatsApp <strong style="color:var(--orange)">98%</strong>
+        &nbsp;|&nbsp; SMS 클릭률 5% → WhatsApp <strong style="color:var(--orange)">45~60%</strong>
+        &nbsp;|&nbsp; 앱 푸시 전환율 5% → WhatsApp <strong style="color:var(--orange)">20~35%</strong>
+        &nbsp;|&nbsp; 일반 광고 CPC 대비 CPA <strong style="color:var(--orange)">60% 절감</strong> 가능
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: NEXT STEPS -->
+  <div class="section">
+    <div class="section-label">Next Steps</div>
+    <div class="section-title">실행 로드맵</div>
+    <div class="section-desc">Infobip WhatsApp Business API를 통해 챗봇·자동화·쿠폰 발송을 원스톱으로 구축합니다.</div>
+
+    <div class="next-grid">
+      <div class="next-card">
+        <div class="next-num">01</div>
+        <div class="next-title">WhatsApp Business API 연동</div>
+        <div class="next-body">Infobip 플랫폼에서 무신사 공식 WhatsApp 채널 개설. 챗봇 플로우 설계 및 자동화 세팅. 쿠폰 발급 시스템 연동.</div>
+        <div class="next-timeline">→ Week 1~2</div>
+      </div>
+      <div class="next-card">
+        <div class="next-num">02</div>
+        <div class="next-title">FB/IG/TikTok 광고 캠페인 론칭</div>
+        <div class="next-body">Click-to-WhatsApp 광고 소재 제작. 국가별 타겟 세팅 (동남아·중동·미국·유럽). A/B 테스트 운영.</div>
+        <div class="next-timeline">→ Week 2~3</div>
+      </div>
+      <div class="next-card">
+        <div class="next-num">03</div>
+        <div class="next-title">현장 QR + 쿠폰 시스템 구축</div>
+        <div class="next-body">무신사 스탠다드 홍대·성수점 QR 설치. 현장 전용 쿠폰 코드 자동 생성 시스템. 직원 명함 QR 인쇄.</div>
+        <div class="next-timeline">→ Week 3~4</div>
+      </div>
+      <div class="next-card">
+        <div class="next-num">04</div>
+        <div class="next-title">파일럿 운영 및 성과 분석</div>
+        <div class="next-body">1개월 파일럿 운영. 옵트인율·전환율·쿠폰 사용률 측정. 데이터 기반 최적화 후 전면 확대.</div>
+        <div class="next-timeline">→ Month 2</div>
+      </div>
+      <div class="next-card">
+        <div class="next-num">05</div>
+        <div class="next-title">Post-Visit 자동화 구축</div>
+        <div class="next-body">귀국 트리거 시퀀스 세팅. 서베이 자동화. 세그먼트별 재방한 캠페인 플로우 완성.</div>
+        <div class="next-timeline">→ Month 2~3</div>
+      </div>
+      <div class="next-card">
+        <div class="next-num">06</div>
+        <div class="next-title">전면 확대 · 글로벌 캠페인</div>
+        <div class="next-body">성과 기반 광고 예산 확대. 무신사 글로벌 연동 강화. 다국어 챗봇 확장 (태국어·아랍어·인도네시아어).</div>
+        <div class="next-timeline">→ Month 3+</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <strong>Infobip Korea — APAC KJ Squad</strong>
+      WhatsApp Business API · Chatbot Automation · Campaign Management
+    </div>
+    <div class="footer-right">
+      <span class="footer-tag">WhatsApp Business API</span>
+      <span class="footer-tag">Infobip Platform</span>
+      <span class="footer-tag">2026 Strategy</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════
+   MUSINSA PROPOSAL — Chatbot Animation
+═══════════════════════════════ */
+let cbRunning = false;
+let cbDone = false;
+
+function cbDelay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function cbNow() {
+  const h = new Date().getHours();
+  const m = String(new Date().getMinutes()).padStart(2,'0');
+  return h + ':' + m;
+}
+
+function cbAddBubble(text, isUser) {
+  const body = document.getElementById('cbBody');
+  const div = document.createElement('div');
+  div.className = 'cb-bubble ' + (isUser ? 'user' : 'bot');
+  div.innerHTML = text + '<div class="cb-time">' + (isUser ? '✓✓ ' : '') + cbNow() + '</div>';
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+  return div;
+}
+
+function cbAddTyping() {
+  const body = document.getElementById('cbBody');
+  const div = document.createElement('div');
+  div.className = 'cb-typing';
+  div.id = 'cbTyping';
+  div.innerHTML = '<div class="cb-dot"></div><div class="cb-dot"></div><div class="cb-dot"></div>';
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+  return div;
+}
+
+function cbRemoveTyping() {
+  const t = document.getElementById('cbTyping');
+  if (t) t.remove();
+}
+
+async function cbMsg(text, isUser, typingMs) {
+  if (!isUser) {
+    cbAddTyping();
+    await cbDelay(typingMs || 1100);
+    cbRemoveTyping();
+  }
+  cbAddBubble(text, isUser);
+  await cbDelay(280);
+}
+
+function cbAddChoices(opts, selectedIdx) {
+  const body = document.getElementById('cbBody');
+  const wrap = document.createElement('div');
+  wrap.className = 'cb-qr-wrap';
+  opts.forEach(function(o, i) {
+    const btn = document.createElement('div');
+    btn.className = 'cb-qr-btn' + (i === selectedIdx ? ' sel' : '');
+    btn.textContent = o;
+    wrap.appendChild(btn);
+  });
+  body.appendChild(wrap);
+  body.scrollTop = body.scrollHeight;
+}
+
+async function cbRun() {
+  cbRunning = true;
+  const body = document.getElementById('cbBody');
+
+  await cbDelay(400);
+
+  // 01. Welcome
+  await cbMsg('👗 <strong>Hey! Welcome to MUSINSA.</strong><br>Korea's #1 K-fashion platform!<br><br>I'll set you up with:<br>✅ Store info near YOUR hotel<br>✅ This season's hottest drops<br>✅ An exclusive coupon 🎁<br><br>Just 3 quick questions — ready?<br>Reply <strong>YES</strong> 👇', false, 900);
+
+  await cbDelay(500);
+  await cbMsg('YES! Let's go 🙌', true, 0);
+
+  // 02. Visit Date
+  await cbMsg('📅 <strong>When are you arriving in Korea?</strong><br><br>Type your arrival date:<br><span style="color:#aaa;font-size:9px">Example: July 10, 2026</span>', false, 1000);
+
+  await cbDelay(400);
+  await cbMsg('July 10, 2026 ✈️', true, 0);
+
+  await cbDelay(300);
+  await cbMsg('✅ July 10 — saved!<br>How many days in Seoul?', false, 700);
+
+  await cbDelay(350);
+  await cbMsg('4 days 😊', true, 0);
+
+  // 03. Location
+  await cbMsg('📍 <strong>Which area are you staying in?</strong>', false, 900);
+
+  cbAddChoices([
+    '1️⃣ 홍대/Hongdae ⭐', '2️⃣ 성수/Seongsu ⭐',
+    '3️⃣ 명동/Myeongdong', '4️⃣ 강남/Gangnam'
+  ], 0);
+  await cbDelay(700);
+
+  await cbMsg('1️⃣ Hongdae 🏠', true, 0);
+
+  await cbDelay(300);
+  await cbMsg('🎉 Hongdae! MUSINSA STANDARD is literally 3 min away from most hotels there!', false, 800);
+
+  // 04. Style
+  await cbMsg('🧢 <strong>What's your style?</strong>', false, 700);
+
+  cbAddChoices([
+    '1️⃣ Streetwear / Urban', '2️⃣ Minimal / Clean',
+    '3️⃣ K-pop / Trendy', '4️⃣ All 😄'
+  ], 0);
+  await cbDelay(700);
+
+  await cbMsg('1️⃣ Streetwear 🔥', true, 0);
+
+  // 05. Signup
+  await cbMsg('🙌 Perfect! Almost done —<br><br>Create your free account to unlock your coupon:<br><br>👉 <span style="color:#128C7E;font-weight:700">musinsa.com/global/join</span><br><br><span style="color:#aaa;font-size:9px">30 seconds — coupon drops instantly!</span>', false, 1100);
+
+  await cbDelay(900);
+  await cbMsg('✅ Signed up!', true, 0);
+
+  // Coupon
+  await cbDelay(400);
+  const body2 = document.getElementById('cbBody');
+  const couponBubble = document.createElement('div');
+  couponBubble.className = 'cb-bubble bot';
+  couponBubble.innerHTML =
+    '🎉 <strong>You're officially a MUSINSA member!</strong><br><br>Your Seoul Welcome Coupon:<br><br>' +
+    '<div class="cb-coupon">' +
+      '<div class="cb-coupon-title">🏷️ WELCOME COUPON · MUSINSA</div>' +
+      '<div class="cb-coupon-row">' +
+        '<div>' +
+          '<div class="cb-coupon-code">MU-WA-2026</div>' +
+          '<div class="cb-coupon-sub">무신사 스탠다드 전 매장 · July 10~13</div>' +
+        '</div>' +
+        '<div class="cb-coupon-pct">15%<br><span style="font-size:9px;font-weight:700">OFF</span></div>' +
+      '</div>' +
+    '</div>' +
+    '<br>📌 Save this chat — I'll message you when you land! ✈️' +
+    '<div class="cb-time">' + cbNow() + '</div>';
+  body2.appendChild(couponBubble);
+  body2.scrollTop = body2.scrollHeight;
+
+  // Show replay button
+  await cbDelay(600);
+  document.getElementById('cbReplayBtn').style.display = 'inline-flex';
+  cbRunning = false;
+  cbDone = true;
+}
+
+function cbStartIfIdle() {
+  if (cbRunning || cbDone) return;
+  document.getElementById('cbOverlay').classList.add('hide');
+  cbRun();
+}
+
+function cbReplay() {
+  cbRunning = false;
+  cbDone = false;
+  const body = document.getElementById('cbBody');
+  body.innerHTML = '<div class="cb-date-badge">Today</div>';
+  document.getElementById('cbReplayBtn').style.display = 'none';
+  document.getElementById('cbOverlay').classList.remove('hide');
+  document.getElementById('cbOverlay').classList.add('hide');
+  cbRun();
+}
+</script>
+
+<script>
+var _ph = {};
+
+function _ts() {
+  var d = new Date();
+  return d.getHours() + ':' + (d.getMinutes()<10?'0':'') + d.getMinutes();
+}
+
+function _body(id) { return document.getElementById(id+'Body'); }
+
+function _addMsg(id, html, isUser) {
+  var b = document.getElementById(id+'Body');
+  var el = document.createElement('div');
+  el.className = 'ph-b ' + (isUser ? 'usr' : 'bot');
+  el.innerHTML = html + '<div class="ph-ts">'+(isUser?'&#10003;&#10003; ':'')+_ts()+'</div>';
+  b.appendChild(el);
+  b.scrollTop = b.scrollHeight;
+}
+
+function _addChoices(id, opts, sel) {
+  var b = document.getElementById(id+'Body');
+  var w = document.createElement('div');
+  w.className = 'ph-qrow';
+  opts.forEach(function(o,i){
+    var btn = document.createElement('div');
+    btn.className = 'ph-qbtn'+(i===sel?' sel':'');
+    btn.textContent = o;
+    w.appendChild(btn);
+  });
+  b.appendChild(w);
+  b.scrollTop = b.scrollHeight;
+}
+
+function _typing(id) {
+  var b = document.getElementById(id+'Body');
+  var t = document.createElement('div');
+  t.className = 'ph-typing'; t.id = id+'Ty';
+  t.innerHTML = '<div class="ph-dot"></div><div class="ph-dot"></div><div class="ph-dot"></div>';
+  b.appendChild(t); b.scrollTop = b.scrollHeight;
+}
+
+function _rmTyping(id) {
+  var t = document.getElementById(id+'Ty');
+  if(t) t.remove();
+}
+
+function _next(id, steps, i) {
+  if(i >= steps.length) {
+    _ph[id].done = true; _ph[id].run = false;
+    document.getElementById(id+'Rp').style.display = 'inline-block';
+    return;
+  }
+  var s = steps[i];
+  var go = function(){ _next(id, steps, i+1); };
+
+  if(s[0] === 'bot') {
+    _typing(id);
+    setTimeout(function(){
+      _rmTyping(id);
+      _addMsg(id, s[1], false);
+      setTimeout(go, 250);
+    }, s[2]||950);
+
+  } else if(s[0] === 'usr') {
+    setTimeout(function(){
+      _addMsg(id, s[1], true);
+      setTimeout(go, 300);
+    }, 400);
+
+  } else if(s[0] === 'cho') {
+    _addChoices(id, s[1], s[2]);
+    setTimeout(go, s[3]||800);
+
+  } else if(s[0] === 'raw') {
+    setTimeout(function(){
+      var b = document.getElementById(id+'Body');
+      var el = document.createElement('div');
+      el.className = 'ph-b bot';
+      el.innerHTML = s[1] + '<div class="ph-ts">'+_ts()+'</div>';
+      b.appendChild(el); b.scrollTop = b.scrollHeight;
+      setTimeout(go, 350);
+    }, s[2]||600);
+  }
+}
+
+/* ── PHASE 1 STEPS ── */
+var S1 = [
+  ['bot', '👗 <b>Hey! Welcome to MUSINSA.</b><br>Korea\'s #1 K-fashion platform!<br><br>✅ Store info near YOUR hotel<br>✅ This season\'s hottest drops<br>✅ An exclusive coupon 🎁<br><br>Just 3 quick questions — Reply <b>YES</b> 👇', 850],
+  ['usr', 'YES! Let\'s go 🙌'],
+  ['bot', '📅 <b>When are you arriving in Korea?</b><br><span style="color:#bbb;font-size:9px">e.g. July 10, 2026</span>', 900],
+  ['usr', 'July 10, 2026 ✈️'],
+  ['bot', '✅ July 10 saved! How many days in Seoul?', 650],
+  ['usr', '4 days 😊'],
+  ['bot', '📍 <b>Which area are you staying in?</b>', 850],
+  ['cho', ['1️⃣ 홍대/Hongdae ⭐','2️⃣ 성수/Seongsu ⭐','3️⃣ 명동','4️⃣ 강남'], 0, 750],
+  ['usr', '1️⃣ Hongdae 🏠'],
+  ['bot', '🎉 Hongdae! MUSINSA STANDARD is 3 min from most hotels!', 700],
+  ['bot', '🧢 <b>What\'s your style?</b>', 600],
+  ['cho', ['1️⃣ Streetwear','2️⃣ Minimal','3️⃣ K-pop','4️⃣ All 😄'], 0, 700],
+  ['usr', '1️⃣ Streetwear 🔥'],
+  ['bot', '🙌 Create your free account:<br>👉 <span style="color:#128c7e;font-weight:700">musinsa.com/global/join</span><br><span style="color:#bbb;font-size:9px">30 sec — coupon drops instantly!</span>', 1000],
+  ['usr', '✅ Signed up!'],
+  ['raw', '🎉 <b>You\'re a MUSINSA member!</b><br><br><div class="ph-cpn"><div class="ph-cpn-hd">🏷️ WELCOME COUPON · MUSINSA</div><div class="ph-cpn-row"><div><div class="ph-cpn-code">MU-WA-2026</div><div class="ph-cpn-sub">무신사 스탠다드 전 매장 · July 10~13</div></div><div class="ph-cpn-pct">15%<br><span style="font-size:8px">OFF</span></div></div></div><br>📌 Save this chat — I\'ll message when you land! ✈️', 350]
+];
+
+/* ── PHASE 2 STEPS ── */
+var S2 = [
+  ['bot', '🇰🇷 <b>TODAY IS THE DAY!</b><br>Are you in Seoul yet?', 800],
+  ['cho', ['1️⃣ 네, 도착했어요! 🙌','2️⃣ 오늘 오후 도착','3️⃣ 일정 변경'], 0, 700],
+  ['usr', '1️⃣ Yes, just arrived! 🙌'],
+  ['bot', '🔥 <b>TODAY\'S HOTTEST at Hongdae:</b>', 750],
+  ['raw', '<div class="ph-prod"><div class="ph-prod-img">👕</div><div class="ph-prod-info"><div class="ph-prod-nm">Ader Error — Oversized Logo Tee</div><div class="ph-prod-sub">오늘 신상 입고 · 재고 소량</div><div class="ph-prod-bd">🔥 TRENDING</div></div></div><div class="ph-prod" style="margin-top:4px"><div class="ph-prod-img">🧥</div><div class="ph-prod-info"><div class="ph-prod-nm">디스이즈네버댓 — Coaches Jacket</div><div class="ph-prod-sub">외국인 최애 픽 · XS~XL</div><div class="ph-prod-bd" style="background:#ff5200">⭐ STAFF PICK</div></div></div>', 600],
+  ['bot', '🏷️ <b>Your coupon is NOW ACTIVE:</b><br><br><div style="background:#e8f5e9;border-radius:7px;padding:8px;border-left:3px solid #25d366"><b style="font-size:12px;color:#1b5e20">MU-WA-2026</b><br><span style="font-size:9px;color:#555">15% OFF · Show this chat at checkout</span></div><br>📍 MUSINSA STANDARD Hongdae<br><span style="color:#128c7e;font-size:9px">→ 지도 링크 (3 min walk) · Open ~9PM</span>', 950]
+];
+
+/* ── PHASE 3 STEPS ── */
+var S3 = [
+  ['bot', '✈️ <b>Hope Seoul was incredible!</b><br>Did you make it back safely?', 800],
+  ['cho', ['1️⃣ Yes, back home! 🏠','2️⃣ Still in Korea 😄'], 0, 700],
+  ['usr', '1️⃣ Yes, back home! 🏠'],
+  ['bot', '🛍️ Didn\'t grab everything?<br>MUSINSA ships worldwide 🌍<br><span style="color:#128c7e;font-size:9px">→ musinsa.com/global</span><br><br>Your coupon <b>MU-WA-2026</b> works online too!', 900],
+  ['bot', '📊 <b>Quick survey:</b><br>다음 한국 방문 계획은?', 800],
+  ['cho', ['1️⃣ 3개월 내 🔥','2️⃣ 6개월 내','3️⃣ 1년 내','4️⃣ 미정'], 0, 750],
+  ['usr', '1️⃣ 3개월 내 🔥'],
+  ['bot', '🎉 <b>VIP Return Member 등록 완료!</b>', 650],
+  ['raw', '<div class="ph-cpn"><div class="ph-cpn-hd">⭐ VIP RETURN COUPON · MUSINSA</div><div class="ph-cpn-row"><div><div class="ph-cpn-code">VIP-MU-2026</div><div class="ph-cpn-sub">다음 방한 시 무신사 스탠다드 전 매장</div></div><div class="ph-cpn-pct">20%<br><span style="font-size:8px">OFF</span></div></div></div>', 300],
+  ['bot', '👯 친구도 서울 가나요?<br><br>공유하면:<br>→ 친구: 15% 쿠폰<br>→ 나: 5,000 포인트 🎁<br><span style="color:#128c7e;font-size:9px">→ 지금 바로 공유하기</span>', 900]
+];
+
+var STEPS = { p1: S1, p2: S2, p3: S3 };
+var DATES = { p1: 'Today', p2: 'July 10 &middot; Arrival Day', p3: 'July 14 &middot; After return' };
+
+function phStart(id) {
+  if(!_ph[id]) _ph[id] = {run:false, done:false};
+  if(_ph[id].run || _ph[id].done) return;
+  _ph[id].run = true;
+  document.getElementById(id+'Ov').classList.add('off');
+  _next(id, STEPS[id], 0);
+}
+
+function phReplay(id) {
+  _ph[id] = {run:false, done:false};
+  document.getElementById(id+'Body').innerHTML = '<div class="ph-datechip">'+DATES[id]+'</div>';
+  document.getElementById(id+'Rp').style.display = 'none';
+  var ov = document.getElementById(id+'Ov');
+  ov.classList.remove('off');
+  setTimeout(function(){
+    ov.classList.add('off');
+    _ph[id].run = true;
+    _next(id, STEPS[id], 0);
+  }, 300);
+}
+</script>
+</body>
+</html>
