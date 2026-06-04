@@ -114,7 +114,7 @@
 /* ── Shared playbook initializer ── */
 function initPlaybook() {
   var PLAYBOOKS = [
-    { ch:"WhatsApp", cls:"ch-wa",   keyword:"Chatbot Promotion",  desc:"챗봇 솔루션을 활용한 마케팅 캠페인",       client:"Nissan KSA",   link:"https://www.infobip.com" },
+    { ch:"WhatsApp", cls:"ch-wa",   keyword:"Chatbot Promotion",  desc:"챗봇 솔루션을 활용한 마케팅 캠페인",       client:"Nissan KSA",   link:"https://kjsquados.github.io/whatsapp-chatbot-nissan/" },
     { ch:"WhatsApp", cls:"ch-wa",   keyword:"CTWA",           desc:"Click-to-WhatsApp 광고 전환",   client:"Lotte ON"       },
     { ch:"WhatsApp", cls:"ch-wa",   keyword:"Re-engagement",  desc:"휴면 고객 재활성화 시퀀스",       client:"Hyundai Card"   },
     { ch:"WhatsApp", cls:"ch-wa",   keyword:"Cart Abandon",   desc:"장바구니 이탈 복구 플로우",       client:"Coupang"        },
